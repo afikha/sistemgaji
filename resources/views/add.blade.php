@@ -12,17 +12,27 @@
     <!-- /.navbar -->
     <div class="container">
         <h3>Tambah Data Karyawan</h3>
-        <form>
+        <form action="{{ route('addViewKaryawan') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="form-group">
-                <label for="namakaryawan" class="form-label">Nama Karyawan :</label>
-                <input type="text" class="form-control" id="namakaryawan" placeholder="Masukkan nama">
+                <label for="nama_karyawan" class="form-label">Nama Karyawan :</label>
+                <input name="nama_karyawan" type="text" class="form-control" id="nama_karyawan" placeholder="Masukkan nama">
             </div>
+            {{-- <div class="form-group">
+                <label for="jabatan_karyawan" class="form-label">Jabatan :</label>
+                <input name="jabatan_karyawan" type="text" class="form-control" id="jabatan_karyawan" placeholder="Masukkan jabatan">
+            </div> --}}
             <div class="form-group">
-                <label for="jabatan" class="form-label">Jabatan :</label>
-                <input type="text" class="form-control" id="jabatan" placeholder="Masukkan jabatan">
+                <label for="jabatan_karyawan" class="form-label">Jabatan :</label>
+                <select name="jabatan_karyawan" class="form-control" id="jabatan_karyawan">
+                    <option value="">Pilih Jabatan</option>
+                    @foreach($jabatanList as $jabatan)
+                        <option value="{{ $jabatan->jabatan }}">{{ $jabatan->jabatan }}</option>
+                    @endforeach
+                </select>
             </div>
             <button type="submit" class="btn btn-save">Simpan</button>
-            <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ url('/datakaryawan') }}'">Batal</button>
+            <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ route('indexKaryawan') }}'">Batal</button>
         </form>
     </div>
     <script src="script.js"></script>

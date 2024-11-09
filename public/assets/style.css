@@ -191,7 +191,7 @@ body {
     font-weight: bold;
 }
 .form-control {
-    max-width: 300px;
+    max-width: 200px;
 }
 .btn-save {
     background-color: #4CAF50;

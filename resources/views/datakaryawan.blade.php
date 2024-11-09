@@ -13,7 +13,7 @@
         <h5>DATA KARYAWAN</h5>
         <div class="mb-3">
             <!-- <button class="btn btn-purple">+ Tambah Data</button> -->
-            <a href="{{ url('/add') }}" class="btn btn-purple">+ Tambah Data</a>
+            <a href="{{route('addViewKaryawan')}}" class="btn btn-purple">+ Tambah Data</a>
         <div class="table-container">
             <table class="table table-bordered">
                 <thead>
@@ -25,7 +25,19 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($data as $d)
                     <tr>
+                        <td>{{$loop->iteration}}.</td>
+                        <td>{{$d->nama_karyawan}}</td>
+                        <td>{{$d->jabatan_karyawan}}</td>
+                        <td class="action-icons">
+                            <a><i class="fas fa-edit"></i></a>
+                            <a><i class="fas fa-trash-alt"></i></a>
+                            <a href="#" data-jabatan="{{ $d->jabatan_karyawan }}" class="info-link"><i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                    @endforeach
+                    {{-- <tr>
                         <td>1.</td>
                         <td>Agus</td>
                         <td>Tenun</td>
@@ -34,17 +46,7 @@
                             <a href="#"><i class="fas fa-trash-alt"></i></a>
                             <a href="#" data-jabatan="tenun" class="info-link"><i class="fas fa-info-circle"></i></a>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>2.</td>
-                        <td>Ari</td>
-                        <td>Naleni</td>
-                        <td class="action-icons">
-                            <a href="{{ url('/edit') }}"><i class="fas fa-edit"></i></a>
-                            <a href="#"><i class="fas fa-trash-alt"></i></a>
-                            <a href="#" data-jabatan="barang" class="info-link"><i class="fas fa-info-circle"></i></a>
-                        </td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
             </div>
