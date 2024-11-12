@@ -31,9 +31,9 @@
                         <td>{{$d->nama_karyawan}}</td>
                         <td>{{$d->jabatan_karyawan}}</td>
                         <td class="action-icons">
-                            <a><i class="fas fa-edit"></i></a>
-                            <a><i class="fas fa-trash-alt"></i></a>
-                            <a href="#" data-jabatan="{{ $d->jabatan_karyawan }}" class="info-link"><i class="fas fa-info-circle"></i></a>
+                            <a href="{{route('editKaryawan', $d->id)}}"><i class="fas fa-edit"></i></a>
+                            <a href="{{route('deleteKaryawan', $d->id)}}"><i class="fas fa-trash-alt"></i></a>
+                            <a href="{{ route('datakaryawan', $d->id) }}" data-jabatan="{{ $d->jabatan_karyawan }}" class="info-link"><i class="fas fa-info-circle"></i></a>
                         </td>
                     </tr>
                     @endforeach

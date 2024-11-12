@@ -12,14 +12,32 @@
     <!-- /.navbar -->
     <div class="container">
         <h3>Edit Data Karyawan</h3>
-        <form>
+        <form action="{{route('updateKaryawan')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input name="id" type="hidden" value="{{$data->id}}">
             <div class="form-group">
                 <label for="namakaryawan" class="form-label">Nama Karyawan :</label>
-                <input type="text" class="form-control" id="namakaryawan" placeholder="Masukkan nama">
+                <input name="nama_karyawan" type="text" class="form-control" id="namakaryawan" placeholder="Masukkan nama" value="{{$data->nama_karyawan}}">
             </div>
+            {{-- <div class="form-group">
+                <label for="jabatan_karyawan" class="form-label">Jabatan :</label>
+                <select name="jabatan_karyawan" class="form-control" id="jabatan_karyawan" value="{{$data->jabatan_karyawan}}">
+                    <option value="">Pilih Jabatan</option>
+                    @foreach($jabatanList as $jabatan)
+                        <option value="{{ $jabatan->jabatan }}">{{ $jabatan->jabatan }}</option>
+                    @endforeach
+                </select>
+            </div> --}}
             <div class="form-group">
-                <label for="jabatan" class="form-label">Jabatan :</label>
-                <input type="text" class="form-control" id="jabatan" placeholder="Masukkan jabatan">
+                <label for="jabatan_karyawan" class="form-label">Jabatan :</label>
+                <select name="jabatan_karyawan" class="form-control" id="jabatan_karyawan">
+                    <option value="">Pilih Jabatan</option>
+                    @foreach($jabatanList as $jabatan)
+                        <option value="{{ $jabatan->jabatan }}" {{ $jabatan->jabatan == $data->jabatan_karyawan ? 'selected' : '' }}>
+                            {{ $jabatan->jabatan }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <button type="submit" class="btn btn-save">Simpan</button>
             <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ url('/datakaryawan') }}'">Batal</button>
