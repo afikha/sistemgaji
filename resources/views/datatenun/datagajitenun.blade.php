@@ -72,7 +72,7 @@
       
                   <div class="card">
                     <div class="card-header">
-                      <h3 class="card-title">DataTable with default features</h3>
+                      <h3 class="card-title">Data Mingguan dan Gaji Tenun</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -151,7 +151,7 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('admin-lte') }}/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{ asset('admin-lte') }}/dist/js/demo.js"></script>
+{{-- <script src="{{ asset('admin-lte') }}/dist/js/demo.js"></script> --}}
 <!-- Page specific script -->
 <script>
   $(function () {

@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
 }
 .navbar-header {
-    background-color: #4F6F52; /* Warna latar belakang navbar dan header */
+    background-color: #007bff; /* Warna latar belakang navbar dan header */
     color: white;
     padding: 12px;
 }
@@ -11,7 +11,7 @@ body {
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    background-color: #4F6F52; /* Warna latar belakang header */
+    background-color: #007bff; /* Warna latar belakang header */
     color: white;
     justify-content: center; /* Memusatkan konten secara horizontal */
 }
@@ -98,12 +98,12 @@ body {
     justify-content: center;
 }
 .pagination .page-item.active .page-link {
-    background-color: #4F6F52;
-    border-color: #4F6F52;
+    background-color: #007bff;
+    border-color: #007bff;
 }
 .btn-primary {
-    background-color: #4F6F52;
-    border-color: #4F6F52;
+    background-color: #007bff;
+    border-color: #007bff;
 }
 .action-icons i {
     margin-right: 10px;
@@ -120,13 +120,13 @@ body {
 
 /* kode css gaji tenun */
 .btn-purple {
-    background-color: #4F6F52;
+    background-color: #007bff;
     color: white;
 }
-.btn-green {
-    background-color: #28a745;
+/* .btn-green {
+    background-color: #007bff;
     color: white;
-}
+} */
 
 /* kode css gaji barang */
 
@@ -167,7 +167,7 @@ body {
 }
 
 .total-gaji {
-    background-color: #4F6F52;
+    background-color: #007bff;
     color: white;
     padding: 8px 12px; /* Menambah ruang di dalam kotak Total Gaji */
     font-size: 18px;
@@ -175,7 +175,7 @@ body {
 }
 
 .btn-calculate {
-    background-color: #4F6F52;
+    background-color: #007bff;
     color: white;
     padding: 5px 10px;
     border: none;
@@ -218,7 +218,7 @@ body {
 
 /* tambahan */
 .navbar-data {
-    background-color: #4F6F52; /* Warna latar belakang navbar dan header */
+    background-color: #007bff; /* Warna latar belakang navbar dan header */
     color: white;
     padding: 12px;
 }
