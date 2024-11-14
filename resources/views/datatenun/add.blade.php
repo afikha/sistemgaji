@@ -12,37 +12,38 @@
     <!-- /.navbar -->
     <div class="container">
         <h3>Tambah Data Pengerjaan Gaji Tenun</h3>
-        <form>
+        <form action="{{ route('addViewGajiTenun') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="form-group">
-                <label for="mingguKe" class="form-label">Minggu Ke - :</label>
-                <input type="text" class="form-control" id="mingguKe" placeholder="Masukkan Minggu Ke-">
+                <label for="minggu" class="form-label">Minggu Ke - :</label>
+                <input name="minggu" class="form-control" id="mingguKe" placeholder="Masukkan Minggu Ke-">
             </div>
             <div class="form-group">
-                <label for="hari1" class="form-label">Hari ke - 1 :</label>
-                <input type="number" class="form-control" id="hari1" value="0">
+                <label for="hari_1" class="form-label">Hari ke - 1 :</label>
+                <input name="hari_1" type="number" class="form-control" id="hari1" value="0">
             </div>
             <div class="form-group">
-                <label for="hari2" class="form-label">Hari ke - 2 :</label>
-                <input type="number" class="form-control" id="hari2" value="0">
+                <label for="hari_2" class="form-label">Hari ke - 2 :</label>
+                <input name="hari_2" type="number" class="form-control" id="hari2" value="0">
             </div>
             <div class="form-group">
-                <label for="hari3" class="form-label">Hari ke - 3 :</label>
-                <input type="number" class="form-control" id="hari3" value="0">
+                <label for="hari_3" class="form-label">Hari ke - 3 :</label>
+                <input name="hari_3" type="number" class="form-control" id="hari3" value="0">
             </div>
             <div class="form-group">
-                <label for="hari4" class="form-label">Hari ke - 4 :</label>
-                <input type="number" class="form-control" id="hari4" value="0">
+                <label for="hari_4" class="form-label">Hari ke - 4 :</label>
+                <input name="hari_4" type="number" class="form-control" id="hari4" value="0">
             </div>
             <div class="form-group">
-                <label for="hari5" class="form-label">Hari ke - 5 :</label>
-                <input type="number" class="form-control" id="hari5" value="0">
+                <label for="hari_5" class="form-label">Hari ke - 5 :</label>
+                <input name="hari_5" type="number" class="form-control" id="hari5" value="0">
             </div>
             <div class="form-group">
-                <label for="hari6" class="form-label">Hari ke - 6 :</label>
-                <input type="number" class="form-control" id="hari6" value="0">
+                <label for="hari_6" class="form-label">Hari ke - 6 :</label>
+                <input name="hari_6" type="number" class="form-control" id="hari6" value="0">
             </div>
             <button type="submit" class="btn btn-save">Simpan</button>
-            <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ url('/datatenun/datagajitenun') }}'">Batal</button>
+            <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ route('indexGajiTenun') }}'">Batal</button>
         </form>
     </div>
     <script src="script.js"></script>

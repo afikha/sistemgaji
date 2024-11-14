@@ -46,7 +46,7 @@
                     <button type="submit" class="btn btn-primary mb-2 ml-auto">
                         <i class="fas fa-eye"></i> Tampilkan Data
                     </button>
-                    <a href="{{ url('/datatenun/add') }}" class="btn btn-success mb-2 ml-3">
+                    <a href="{{route('addViewGajiTenun')}}" class="btn btn-success mb-2 ml-3">
                         <i class="fas fa-plus"></i> Input Data Gaji Tenun
                     </a>
                     <button type="button" class="btn btn-primary mb-2 ml-3">
@@ -94,28 +94,25 @@
                         </tr>
                         </thead>
                         <tbody>
+                          @foreach ($data as $d)
                           <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1 </td>
-                            <td> 100</td>
+                            <td>{{$d->minggu}}</td>
+                            <td>{{$d->hari_1}}</td>
+                            <td>{{$d->hari_2}}</td>
+                            <td>{{$d->hari_3}}</td>
+                            <td>{{$d->hari_4}}</td>
+                            <td>{{$d->hari_5}}</td>
+                            <td>{{$d->hari_6}}</td>
+                            <td>{{$d->total_pengerjaan}} </td>
+                            <td>{{$d->gaji}}</td>
                             <td>
                               <center>
-                                <a class="btn btn-sm btn-info" href="">
-                                  <i class="fas fa-edit"></i>
-                                </a>
-                                <a onclick="return confirm('Yakin Hapus?')" class="btn btn-sm btn-danger" 
-                                   href="">
-                                  <i class="fas fa-trash"></i>
-                                </a>
+                                <a class="btn btn-sm btn-info" href="{{route('editGajiTenun', $d->id)}}"><i class="fas fa-edit"></i></a>
+                                <a onclick="return confirm('Yakin Hapus?')" class="btn btn-sm btn-danger"  href="{{route('deleteGajiTenun', $d->id)}}"><i class="fas fa-trash"></i></a>
                               </center>
                             </td>
                           </tr>
+                          @endforeach
                       </table>
                     </div>
                     <!-- /.card-body -->

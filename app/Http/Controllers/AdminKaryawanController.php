@@ -80,7 +80,7 @@ class AdminKaryawanController extends Controller
 
     public function delete($id)
     {
-        $image_url = DB::table('karyawan')->where('id', $id)->first();
+        $karyawaData = DB::table('karyawan')->where('id', $id)->first();
         $delete = DB::table('karyawan')->where('id', $id)->delete();
 
         return redirect()->route('indexKaryawan')

@@ -40,7 +40,7 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-save">Simpan</button>
-            <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ url('/datakaryawan') }}'">Batal</button>
+            <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ route('indexKaryawan') }}'">Batal</button>
         </form>
     </div>
     <script src="script.js"></script>
