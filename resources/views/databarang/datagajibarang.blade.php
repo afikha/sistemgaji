@@ -84,11 +84,23 @@
                             @endforeach
                         </select>
                     </div>
+                    {{-- year selector --}}
+                    <div class="form-group mb-2 ml-5">
+                        <label for="tahun">Tahun</label>
+                        <select class="form-control ml-3" name="tahun" id="tahun">
+                            <option value="">Pilih Tahun</option>
+                            @foreach (range(2020, now()->year + 4) as $year)
+                                <option value="{{ $year }}" {{ request()->get('tahun') == $year ? 'selected' : '' }}>
+                                    {{ $year }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                     
                     <button type="submit" class="btn btn-primary mb-2 ml-auto">
                         <i class="fas fa-eye"></i> Tampilkan Data
                     </button>
-                    <a href="{{ url('/databarang/add') }}" class="btn btn-success mb-2 ml-3">
+                    <a href="" class="btn btn-success mb-2 ml-3">
                         <i class="fas fa-plus"></i> Input Data Gaji Barang
                     </a>
                 </form>
@@ -98,10 +110,12 @@
         @php
             // Set the selected year and week, or default to the current  first week
             $minggu = request()->get('minggu') ?: 1;
+            // Set the year to the selected year or the current year
+            $tahun = request()->get('tahun') ?: now()->year;
         @endphp
 
         <div class="alert alert-info">
-            Menampilkan Data Pendapatan Pegawai Minggu ke-: <span class="font-weight-bold">{{ $minggu }}</span>
+            Menampilkan Data Pendapatan Pegawai Minggu ke-: <span class="font-weight-bold">{{ $minggu }}</span> Tahun: <span class="font-weight-bold">{{ $tahun }}</span>
         </div>
 
         <section class="content">
@@ -126,11 +140,11 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>10/02/2024</td>
+                                            <td>10/01/2024</td>
                                             <td>1</td>
                                             <td>1</td>
                                             <td>1</td>
-                                            <td>6</td>
+                                            <td>1</td>
                                             <td>
                                                 <center>
                                                     <a class="btn btn-sm btn-info" href="{{ url('/databarang/edit') }}">
@@ -144,6 +158,13 @@
                                             </td>
                                         </tr>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td><strong>Total Gaji</strong></td>
+                                            <td colspan="1">1</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                             <!-- /.card-body -->
@@ -156,15 +177,6 @@
             </div>
             <!-- /.container-fluid -->
         </section>
-        <div class="total-gaji-wrapper">
-          <div class="total-gaji-container">
-              <div class="total-gaji">
-                  Total Gaji = <span id="total-gaji">0</span>
-              </div>
-              <button class="btn-calculate">HITUNG</button>
-          </div>
-      </div>
-    </div>
     
     <script src="script.js"></script>
 

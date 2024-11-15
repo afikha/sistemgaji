@@ -78,7 +78,6 @@
                     <div class="card-body">
                       <table id="example1" class="table table-bordered table-striped">
                         <thead>
-                        <tr>
                           <tr>
                             <th>Minggu ke-</th>
                             <th>Hari 1</th>
@@ -91,7 +90,6 @@
                             <th>Gaji</th>
                             <th>Aksi</th>
                           </tr>
-                        </tr>
                         </thead>
                         <tbody>
                           @foreach ($data as $d)
