@@ -24,28 +24,28 @@
     <!-- /.navbar -->
 
     <!-- container -->
-    @include("container")
+        @include("container")
     <!-- /.container  -->
-    
+
     <div class="container">
-        <h5>DATA KARYAWAN</h5>
+        <h5>UPAH KARYAWAN</h5>
         <div class="mb-3">
-            <a href="{{route('addViewKaryawan')}}" class="btn" style="background-color: #007bff; color: white;">+ Tambah Data</a><br/><br/>
+            <a href="{{route('addViewUpah')}}" class="btn" style="background-color: #007bff; color: white;">+ Tambah Data</a><br/><br/>
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Data Mingguan dan Gaji Barang</h3>
+                                <h3 class="card-title">Data Upah Karyawan Tenun dan Barang</h3>
                             </div>
                             <div class="card-body">
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Karyawan</th>
                                             <th>Jabatan</th>
+                                            <th>Upah</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -53,13 +53,12 @@
                                         @foreach ($data as $d)
                                         <tr>
                                             <td>{{$loop->iteration}}.</td>
-                                            <td>{{$d->nama_karyawan}}</td>
-                                            <td>{{$d->jabatan_karyawan}}</td>
+                                            <td>{{$d->jabatan}}</td>
+                                            <td>{{$d->upah}}</td>
                                             <td>
                                                 <center>
-                                                    <a class="btn btn-sm btn-info" href="{{route('editKaryawan', $d->id)}}"> <i class="fas fa-edit"></i> </a>
-                                                    <a href="{{route('deleteKaryawan', $d->id)}}" onclick="return confirm('Yakin Hapus?')" class="btn btn-sm btn-danger"  href=""> <i class="fas fa-trash"></i></a>
-                                                    <a href="{{ route('datakaryawan', $d->id) }}" data-jabatan="{{ $d->jabatan_karyawan }}" class="info-link"  href=""> <i class="fas fa-info-circle"></i></a>
+                                                    <a class="btn btn-sm btn-info" href="{{route('editUpah', $d->id)}}"> <i class="fas fa-edit"></i> </a>
+                                                    <a href="{{route('deleteUpah', $d->id)}}" onclick="return confirm('Yakin Hapus?')" class="btn btn-sm btn-danger"  href=""> <i class="fas fa-trash"></i></a>
                                                 </center>
                                             </td>
                                         </tr>

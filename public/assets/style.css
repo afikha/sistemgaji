@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
 }
 .navbar-header {
-    background-color: #007bff; /* Warna latar belakang navbar dan header */
+    background-color: #007bff;
     color: white;
     padding: 12px;
 }
@@ -11,9 +11,9 @@ body {
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    background-color: #007bff; /* Warna latar belakang header */
+    background-color: #007bff; 
     color: white;
-    justify-content: center; /* Memusatkan konten secara horizontal */
+    justify-content: center;
 }
 
 .back-button {
@@ -22,7 +22,7 @@ body {
     padding: 3px 4px;
     cursor: pointer;
     font-size: 14px;
-    margin-right: auto; /* Memindahkan tombol ke kiri */
+    margin-right: auto;
 }
 
 .header h3 {
@@ -30,10 +30,8 @@ body {
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-    flex-grow: 1; /* Agar teks berada di tengah secara proporsional */
+    flex-grow: 1;
 }
-
-/* dropdown */
 
 /* Style untuk dropdown */
 .dropdown {
@@ -123,24 +121,14 @@ body {
     background-color: #007bff;
     color: white;
 }
-/* .btn-green {
-    background-color: #007bff;
-    color: white;
-} */
 
-/* kode css gaji barang */
-
-.total-gaji-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
+/* kode css buton kembali */
 .d-flex {
     display: flex;
     align-items: center;
 }
 .mr-3 {
-    margin-left: 25px; /* Add space between the button and the text */
+    margin-left: 25px; 
     margin-top: 15px;
     margin-bottom: -48px;
 }
@@ -157,33 +145,6 @@ body {
 
 .btn-yellow:hover {
     background-color: #FFB74D;
-}
-.total-gaji-container {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Mengatur jarak antara Total Gaji dan tombol HITUNG */
-    max-width: 300px; /* Membatasi lebar total gaji dan tombol */
-    width: 100%;
-}
-
-.total-gaji {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 12px; /* Menambah ruang di dalam kotak Total Gaji */
-    font-size: 18px;
-    white-space: nowrap; /* Mencegah teks turun ke baris baru */
-}
-
-.btn-calculate {
-    background-color: #007bff;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    font-size: 18px;
-}
-
-.btn-calculate:hover {
-    background-color: #99B080;
 }
 
 /* kode css tambah data gaji tenun */
@@ -208,17 +169,17 @@ body {
 }
 
 .form-group label {
-    width: 150px; /* Atur lebar tetap untuk label agar tidak terlalu jauh dari input */
-    margin-right: 10px; /* Jarak antara label dan input */
+    width: 150px; 
+    margin-right: 10px;
 }
 
 .form-group input {
-    max-width: 200px; /* Atur lebar input sesuai kebutuhan */
+    max-width: 200px; 
 }
 
 /* tambahan */
 .navbar-data {
-    background-color: #007bff; /* Warna latar belakang navbar dan header */
+    background-color: #007bff;
     color: white;
     padding: 12px;
 }

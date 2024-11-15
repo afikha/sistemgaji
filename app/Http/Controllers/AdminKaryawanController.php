@@ -51,9 +51,9 @@ class AdminKaryawanController extends Controller
 {
     // Validasi data yang masuk
     $request->validate([
-        'id' => 'required|exists:karyawan,id', // Memastikan ID ada di database
-        'nama_karyawan' => 'required|string|max:255', // Nama harus ada, string, dan maksimal 255 karakter
-        'jabatan_karyawan' => 'required|string|max:255', // Jabatan harus ada, string, dan maksimal 255 karakter
+        'id' => 'required|exists:karyawan,id', 
+        'nama_karyawan' => 'required|string|max:255', 
+        'jabatan_karyawan' => 'required|string|max:255', 
     ]);
 
     // Mengambil data dari request

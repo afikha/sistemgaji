@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('jabatan');
             $table->integer('upah');
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('update_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 
