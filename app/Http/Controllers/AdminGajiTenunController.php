@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class AdminGajiTenunController extends Controller
 {
 
-    public function index($karyawan_id = null)
+    public function index($karyawan_id)
     {
         if (Auth::check()) {
             $username = Auth::user()->name;
