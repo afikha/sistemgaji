@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <title>Sistem Penggajian Pabrik Sarung Goyor</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -6,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
 
 </head>
+
 <body>
     <!-- Navbar -->
     @include("header")
@@ -15,13 +17,18 @@
         <form action="{{ route('updateGajiTenun') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="id" value="{{ $data->id }}"> <!-- Menambahkan ID untuk update -->
+            <input type="hidden" name="karyawan_id" value="{{ $data->karyawan_id }}">
             <div class="form-group">
                 <label for="minggu" class="form-label">Minggu Ke - :</label>
                 <input name="minggu" class="form-control" id="mingguKe" placeholder="Masukkan Minggu Ke-" value="{{$data->minggu}}">
             </div>
             <div class="form-group">
+                <label for="tanggal" class="form-label">Tanggal :</label>
+                <input name="tanggal" type="date" class="form-control" id="tanggal" value="{{$data->tanggal}}" readonly>
+            </div>
+            <div class="form-group">
                 <label for="hari_1" class="form-label">Hari ke - 1 :</label>
-                <input name="hari_1" type="number" class="form-control" id="hari1" value="{{$data->hari_1}}" >
+                <input name="hari_1" type="number" class="form-control" id="hari1" value="{{$data->hari_1}}">
             </div>
             <div class="form-group">
                 <label for="hari_2" class="form-label">Hari ke - 2 :</label>
@@ -44,9 +51,10 @@
                 <input name="hari_6" type="number" class="form-control" id="hari6" value="{{$data->hari_6}}">
             </div>
             <button type="submit" class="btn btn-save">Simpan</button>
-            <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ route('indexGajiTenun') }}'">Batal</button>
+            <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ route('indexGajiTenun', $data->karyawan_id) }}'">Batal</button>
         </form>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

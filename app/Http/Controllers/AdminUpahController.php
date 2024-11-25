@@ -3,22 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AdminUpahController extends Controller
 {
     public function index()
     {
-        $data = DB::table('upah')->get();
-        return view('upah.upah', ['data' => $data]);
+        if (Auth::check()) {
+            $username = Auth::user()->name;
+            $data = DB::table('upah')->get();
+            return view('upah.upah', ['data' => $data, 'username' => $username]);
+        } else {
+            return redirect()->route('indexLogin')->with('error', 'Silakan Login');
+        }
     }
 
     public function add()
     {
-        return view('upah.add');
+        if (Auth::check()) {
+            $username = Auth::user()->name;
+            return view('upah.add', ['username' => $username]);
+        } else {
+            return redirect()->route('indexLogin')->with('error', 'Silakan Login');
+        }
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         // Mengambil data dari request
         $jabatan = $request->jabatan;
         $upah = $request->upah;
@@ -41,10 +53,15 @@ class AdminUpahController extends Controller
 
     public function edit($id)
     {
-        $data = DB::table('upah')
-            ->where('id', $id)
-            ->first();
-        return view('upah.edit', ['data' => $data]);
+        if (Auth::check()) {
+            $username = Auth::user()->name;
+            $data = DB::table('upah')
+                ->where('id', $id)
+                ->first();
+            return view('upah.edit', ['data' => $data, 'username' => $username]);
+        } else {
+            return redirect()->route('indexLogin')->with('error', 'Silakan Login');
+        }
     }
 
     public function update(Request $request)
@@ -77,6 +94,4 @@ class AdminUpahController extends Controller
             ? redirect()->route('indexUpah')->with('success', 'Data upah berhasil dihapus!')
             : redirect()->route('indexUpah')->with('error', 'Gagal menghapus data upah.');
     }
-
-
 }

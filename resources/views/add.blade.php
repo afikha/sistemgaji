@@ -16,12 +16,13 @@
             @csrf
             <div class="form-group">
                 <label for="nama_karyawan" class="form-label">Nama Karyawan :</label>
-                <input name="nama_karyawan" type="text" class="form-control" id="nama_karyawan" placeholder="Masukkan nama">
+                <input name="nama_karyawan" type="text" class="form-control" id="nama_karyawan" placeholder="Masukkan nama" required oninput="validateName(event)">
+
             </div>
-            {{-- <div class="form-group">
-                <label for="jabatan_karyawan" class="form-label">Jabatan :</label>
-                <input name="jabatan_karyawan" type="text" class="form-control" id="jabatan_karyawan" placeholder="Masukkan jabatan">
-            </div> --}}
+            <div class="form-group">
+                <label for="alamat" class="form-label">Alamat Karyawan :</label>
+                <input name="alamat" type="text" class="form-control" id="alamat" placeholder="Masukkan alamat">
+            </div>
             <div class="form-group">
                 <label for="jabatan_karyawan" class="form-label">Jabatan :</label>
                 <select name="jabatan_karyawan" class="form-control" id="jabatan_karyawan">
@@ -36,5 +37,21 @@
         </form>
     </div>
     <script src="script.js"></script>
+    <script>
+        function validateName(event) {
+            const input = event.target; // Mendapatkan elemen input
+            const errorMessage = document.getElementById("nameError");
+
+            // Menghapus karakter non-huruf
+            input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
+
+            // Menampilkan pesan kesalahan jika input tidak hanya huruf
+            if (/[^a-zA-Z\s]/.test(input.value)) {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

@@ -19,6 +19,10 @@
                 <label for="namakaryawan" class="form-label">Nama Karyawan :</label>
                 <input name="nama_karyawan" type="text" class="form-control" id="namakaryawan" placeholder="Masukkan nama" value="{{$data->nama_karyawan}}">
             </div>
+            <div class="form-group">
+                <label for="alamat" class="form-label">Alamat Karyawan :</label>
+                <input name="alamat" type="text" class="form-control" id="alamat" placeholder="Masukkan alamat" value="{{$data->alamat}}">
+            </div>
             {{-- <div class="form-group">
                 <label for="jabatan_karyawan" class="form-label">Jabatan :</label>
                 <select name="jabatan_karyawan" class="form-control" id="jabatan_karyawan" value="{{$data->jabatan_karyawan}}">

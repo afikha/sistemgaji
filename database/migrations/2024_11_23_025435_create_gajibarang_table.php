@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gajitenun', function (Blueprint $table) {
+        Schema::create('gajibarang', function (Blueprint $table) {
             $table->id();
-            $table->string('minggu');
-            $table->integer('hari_1');
-            $table->integer('hari_2');
-            $table->integer('hari_3');
-            $table->integer('hari_4');
-            $table->integer('hari_5');
-            $table->integer('hari_6');
+            $table->date('tanggal');
+            $table->integer('barang_jadi');
+            $table->integer('barang_proses');
+            $table->integer('sisabahan_proses');
             $table->integer('total_pengerjaan');
-            $table->integer('gaji');
+            $table->foreignId('karyawan_id')->nullable()->constrained('karyawan')->onDelete('set null');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('update_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gajitenun');
+        Schema::dropIfExists('gajibarang');
     }
 };

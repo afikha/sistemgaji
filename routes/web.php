@@ -3,7 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminKaryawanController;
 use App\Http\Controllers\AdminGajiTenunController;
+use App\Http\Controllers\AdminGajiBarangController;
 use App\Http\Controllers\AdminUpahController;
+use App\Http\Controllers\AuthController;
+
+//Auth
+Route::get('/login', [AuthController::class, 'index'])->name('indexLogin');
+Route::post('/login', [AuthController::class, 'postLogin'])->name('postLogin');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //route karyawan
 Route::get('/datakaryawan', [AdminKaryawanController::class, 'index'])->name('indexKaryawan');
@@ -23,20 +30,22 @@ Route::post('/upah/update', [AdminUpahController::class, 'update'])->name('updat
 Route::get('/upah/delete/{id}', [AdminUpahController::class, 'delete'])->name('deleteUpah');
 
 // route gaji tenun
-Route::get('/datatenun/datagajitenun', [AdminGajiTenunController::class, 'index'])->name('indexGajiTenun');
+Route::get('/datatenun/datagajitenun/{karyawan_id}', [AdminGajiTenunController::class, 'index'])->name('indexGajiTenun');
 Route::get('/datatenun/add', [AdminGajiTenunController::class, 'add'])->name('addViewGajiTenun');
 Route::post('/datatenun/add', [AdminGajiTenunController::class, 'create'])->name('addGajiTenun');
 Route::get('/datatenun/edit/{id}', [AdminGajiTenunController::class, 'edit'])->name('editGajiTenun');
 Route::post('/datatenun/update', [AdminGajiTenunController::class, 'update'])->name('updateGajiTenun');
 Route::get('/datatenun/delete/{id}', [AdminGajiTenunController::class, 'delete'])->name('deleteGajiTenun');
 
+// route gaji barang
+Route::get('/databarang/datagajibarang/{karyawan_id}', [AdminGajiBarangController::class, 'index'])->name('indexGajiBarang');
+Route::get('/databarang/add', [AdminGajiBarangController::class, 'add'])->name('addViewGajiBarang');
+Route::post('/databarang/add', [AdminGajiBarangController::class, 'create'])->name('addGajiBarang');
+Route::get('/databarang/edit/{id}', [AdminGajiBarangController::class, 'edit'])->name('editGajiBarang');
+Route::post('/databarang/update', [AdminGajiBarangController::class, 'update'])->name('updateGajiBarang');
+Route::get('/databarang/delete/{id}', [AdminGajiBarangController::class, 'delete'])->name('deleteGajiBarang');
 
 // =================================================================================================================
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/databarang/datagajibarang', function () {return view('databarang/datagajibarang');});
-Route::get('/databarang/add', function () {return view('databarang/add');});
-Route::get('/databarang/edit', function () {return view('databarang/edit');});
-
