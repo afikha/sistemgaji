@@ -56,8 +56,8 @@
                                             <tr>
                                                 <td>{{$loop->iteration}}.</td>
                                                 <td>{{$d->jabatan}}</td>
-                                                <td>{{$d->upah}}</td>
-                                                {{-- <td>@currency($d->upah)</td> --}}
+                                                {{-- <td>{{$d->upah}}</td> --}}
+                                                <td>@currency($d->upah)</td>
                                                 <td>
                                                     <center>
                                                         <a class="btn btn-sm btn-info" href="{{route('editUpah', $d->id)}}"> <i class="fas fa-edit"></i> </a>
