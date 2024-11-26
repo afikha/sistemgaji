@@ -34,28 +34,23 @@ class AdminUpahController extends Controller
         // Mengambil data dari request
         $jabatan = $request->jabatan;
         $upah = $request->upah;
-        $is_upah = $request->is_upah ? 1 : 0;
 
-        // Jika checkbox 'Simpan Hanya Satu Kali' dicentang (is_upah = 1)
-        if ($is_upah == 1) {
-            // Cek apakah sudah ada jabatan yang sama di database dengan is_upah = 1
-            $exists = DB::table('upah')
-                ->whereRaw('LOWER(jabatan) = ?', [strtolower($jabatan)])
-                ->where('is_upah', 1)
-                ->exists();
+        // Cek apakah sudah ada jabatan yang sama di database (case-insensitive)
+        $exists = DB::table('upah')
+            ->whereRaw('LOWER(jabatan) = ?', [strtolower($jabatan)]) // Case-insensitive
+            ->exists();
 
-            if ($exists) {
-                // Jika sudah ada, return dengan pesan error
-                return redirect()->route('addViewUpah')
-                    ->with('failed', 'Jabatan yang sama sudah ada di database');
-            }
+        if ($exists) {
+            // Jika sudah ada, return dengan pesan error
+            return redirect()->route('addViewUpah')
+                ->with('failed', 'Jabatan yang sama sudah ada di database');
         }
+
 
         // Insert data ke tabel upah
         $add = DB::table('upah')->insert([
             'jabatan' => $jabatan,
             'upah' => $upah,
-            'is_upah' => $is_upah,
         ]);
 
         // Cek apakah data berhasil ditambahkan
@@ -88,30 +83,26 @@ class AdminUpahController extends Controller
             'id' => 'required|exists:upah,id',
             'jabatan' => 'required|string|max:255',
             'upah' => 'required|integer|min:0',
-            'is_upah' => 'nullable|boolean',
         ]);
 
         $jabatan = $request->jabatan;
 
-        if ($request->is_upah == 1) {
-            // Cek apakah ada jabatan yang sama yang sudah ada di database (case-insensitive)
-            $exists = DB::table('upah')
-                ->whereRaw('LOWER(jabatan) = ?', [strtolower($jabatan)]) // Case-insensitive
-                ->where('is_upah', 1)
-                ->where('id', '!=', $request->id) // Pastikan tidak memeriksa ID yang sedang diupdate
-                ->exists();
-    
-            if ($exists) {
-                return redirect()->route('editUpah', ['id' => $request->id])
-                    ->with('failed', 'Jabatan yang sama sudah ada di database');
-            }
+        // Cek apakah sudah ada jabatan yang sama di database (case-insensitive), kecuali untuk ID yang sedang diupdate
+        $exists = DB::table('upah')
+            ->whereRaw('LOWER(jabatan) = ?', [strtolower($jabatan)]) // Case-insensitive
+            ->where('id', '!=', $request->id) // Pastikan tidak memeriksa ID yang sedang diupdate
+            ->exists();
+
+        if ($exists) {
+            // Jika sudah ada, return dengan pesan error
+            return redirect()->route('editUpah', ['id' => $request->id])
+                ->with('failed', 'Jabatan yang sama sudah ada di database');
         }
 
         // Update data di tabel upah
         $update = DB::table('upah')->where('id', $request->id)->update([
             'jabatan' => $request->jabatan,
             'upah' => $request->upah,
-            'is_upah' => $request->is_upah,
             'update_at' => now(),
         ]);
 

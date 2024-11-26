@@ -37,10 +37,6 @@
                 <label for="upah" class="form-label">Upah :</label>
                 <input name="upah" class="form-control" id="upah" placeholder="Masukkan upah">
             </div>
-            <div class="form-check">
-                <input name="is_upah" type="checkbox" class="form-check-input" id="is_upah" value="1">
-                <label class="form-check-label" for="is_upah">Simpan Hanya Satu Kali</label>
-            </div>
             <button type="submit" class="btn btn-save">Simpan</button>
             <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ route('indexUpah') }}'">Batal</button>
         </form>
