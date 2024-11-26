@@ -56,9 +56,9 @@
                                             @foreach ($data as $d)
                                             <tr>
                                                 <td>{{$loop->iteration}}.</td>
-                                                <td>{{$d->nama_karyawan}}</td>
-                                                <td>{{$d->alamat}}</td>
-                                                <td>{{$d->jabatan_karyawan}}</td>
+                                                <td class="text-start">{{$d->nama_karyawan}}</td>
+                                                <td class="text-start">{{$d->alamat}}</td>
+                                                <td class="text-start">{{$d->jabatan_karyawan}}</td>
                                                 <td>
                                                     <center>
                                                         <a class="btn btn-sm btn-info" href="{{route('editKaryawan', $d->id)}}"> <i class="fas fa-edit"></i> </a>

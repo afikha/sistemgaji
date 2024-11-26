@@ -91,14 +91,18 @@ class AdminGajiTenunController extends Controller
         //Cek Tanggal <= hari ini ndak
         $cektanggal = DB::table('gajitenun')
             ->where('karyawan_id', $karyawan_id)
+            ->where('tanggal', $tanggal)
             ->first();
-        if ($tanggal < date('Y-m-d')) {
+        if ($tanggal > date('Y-m-d')) {
             return redirect()->route('addViewGajiTenun', ['karyawan_id' => $karyawan_id])
-                ->with('failed', 'Tanggal tidak boleh kurang dari hari ini!');
+                ->with('failed', 'Tanggal tidak boleh lebih dari hari ini!');
         }
-        if (isset($cektanggal->tanggal) == $tanggal) {
+        if ($cektanggal) {  // Cek jika tanggal sudah ada dalam database untuk karyawan yang sama
             return redirect()->route('addViewGajiTenun', ['karyawan_id' => $karyawan_id])
-                ->with('failed', 'Tanggal yang anda masukkan sudah ada!');
+                ->with('failed', 'Tanggal yang Anda masukkan sudah ada!');
+        // if (isset($cektanggal->tanggal) == $tanggal) {
+        //     return redirect()->route('addViewGajiTenun', ['karyawan_id' => $karyawan_id])
+        //         ->with('failed', 'Tanggal yang anda masukkan sudah ada!');
         }
 
 

@@ -105,11 +105,30 @@ class AdminKaryawanController extends Controller
 
     public function delete($id)
     {
-        $karyawaData = DB::table('karyawan')->where('id', $id)->first();
-        $delete = DB::table('karyawan')->where('id', $id)->delete();
+        // Ambil data karyawan berdasarkan id
+        $karyawanData = DB::table('karyawan')->where('id', $id)->first();
 
-        return redirect()->route('indexKaryawan')
-            ->with('success', 'Data berhasil dihapus!');
+        // Cek apakah karyawan memiliki jabatan 'tenun'
+        if ($karyawanData) {
+            if (strtolower($karyawanData->jabatan_karyawan) == 'tenun') {
+                // Jika jabatan 'tenun', hapus data dari tabel 'gajitenun'
+                DB::table('gajitenun')->where('karyawan_id', $karyawanData->id)->delete();
+            } else {
+                // Jika jabatan selain 'tenun', hapus data dari tabel 'gajibarang'
+                DB::table('gajibarang')->where('karyawan_id', $karyawanData->id)->delete();
+            }
+
+            // Hapus data karyawan
+            $delete = DB::table('karyawan')->where('id', $id)->delete();
+
+            if ($delete) {
+                return redirect()->route('indexKaryawan')->with('success', 'Data karyawan dan gaji terkait berhasil dihapus!');
+            } else {
+                return redirect()->route('indexKaryawan')->with('error', 'Gagal menghapus data karyawan!');
+            }
+        } else {
+            return redirect()->route('indexKaryawan')->with('error', 'Data karyawan tidak ditemukan!');
+        }
     }
 
     public function datakaryawan($id)
@@ -126,7 +145,7 @@ class AdminKaryawanController extends Controller
         }
 
         // Jika jabatan karyawan 'tenun', arahkan ke halaman datatenun
-        if ($data->jabatan_karyawan == 'tenun') {
+        if ($data->jabatan_karyawan == 'Tenun') {
             return redirect()->route('indexGajiTenun', $id);
         } else {
             return redirect()->route('indexGajiBarang', $id);

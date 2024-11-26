@@ -25,7 +25,12 @@
   <!-- /.navbar -->
   <a href="{{ url('/datakaryawan') }}" class="btn btn-yellow mr-3">Kembali</a> <!-- Move button to the left -->
   <div class="container">
-    <h5>GAJI TENUN</h5>
+    <!-- Menampilkan Nama Karyawan -->
+    @php
+        $karyawan = DB::table('karyawan')->where('id', $karyawan_id)->first();
+    @endphp
+
+    <h5>GAJI TENUN <strong style="text-transform: uppercase;">{{ $karyawan->nama_karyawan }}</strong></h5>
     <div class="card mb-3">
       <div class="card mb-3">
         <div class="card-header bg-primary text-white">
@@ -101,7 +106,7 @@
                       @foreach ($data as $d)
                       <tr>
                         <td>{{$d->minggu}}</td>
-                        <td>{{$d->tanggal}}</td>
+                        <td >{{$d->tanggal}}</td>
                         <td>{{$d->hari_1}}</td>
                         <td>{{$d->hari_2}}</td>
                         <td>{{$d->hari_3}}</td>
@@ -109,7 +114,7 @@
                         <td>{{$d->hari_5}}</td>
                         <td>{{$d->hari_6}}</td>
                         <td>{{$d->total_pengerjaan}} </td>
-                        <td>@currency($d->gaji)</td>
+                        <td class="text-end">@currency($d->gaji)</td>
                         @php
                         $total_thr = $total_thr + ($d->total_pengerjaan * $thr_tenun);
                         @endphp
@@ -138,7 +143,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
                       </div>
                     </div>
                   </div>

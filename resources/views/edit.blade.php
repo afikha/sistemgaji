@@ -17,7 +17,7 @@
             <input name="id" type="hidden" value="{{$data->id}}">
             <div class="form-group">
                 <label for="namakaryawan" class="form-label">Nama Karyawan :</label>
-                <input name="nama_karyawan" type="text" class="form-control" id="namakaryawan" placeholder="Masukkan nama" value="{{$data->nama_karyawan}}">
+                <input name="nama_karyawan" type="text" class="form-control" id="namakaryawan" placeholder="Masukkan nama" required oninput="validateName(event)" value="{{$data->nama_karyawan}}">
             </div>
             <div class="form-group">
                 <label for="alamat" class="form-label">Alamat Karyawan :</label>
@@ -48,5 +48,21 @@
         </form>
     </div>
     <script src="script.js"></script>
+    <script>
+        function validateName(event) {
+            const input = event.target; // Mendapatkan elemen input
+            const errorMessage = document.getElementById("nameError");
+
+            // Menghapus karakter non-huruf
+            input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
+
+            // Menampilkan pesan kesalahan jika input tidak hanya huruf
+            if (/[^a-zA-Z\s]/.test(input.value)) {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

@@ -13,7 +13,7 @@
     @include("header")
     <!-- /.navbar -->
     <div class="container">
-        <h3>Tambah Data Pengerjaan Gaji Tenun</h3>
+        <h3>Edit Data Pengerjaan Gaji Tenun</h3>
         <form action="{{ route('updateGajiTenun') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="id" value="{{ $data->id }}"> <!-- Menambahkan ID untuk update -->
@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label for="tanggal" class="form-label">Tanggal :</label>
-                <input name="tanggal" type="date" class="form-control" id="tanggal" value="{{$data->tanggal}}" readonly>
+                <input name="tanggal" type="date" class="form-control" id="tanggal" value="{{$data->tanggal}}">
             </div>
             <div class="form-group">
                 <label for="hari_1" class="form-label">Hari ke - 1 :</label>

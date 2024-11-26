@@ -25,8 +25,13 @@
     <!-- /.navbar -->
     <a href="{{ url('/datakaryawan') }}" class="btn btn-yellow mr-3">Kembali</a> <!-- Move button to the left -->
     <div class="container">
-        
-    <h5>GAJI BARANG</h5>
+
+    <!-- Menampilkan Nama Karyawan -->
+    @php
+        $karyawan = DB::table('karyawan')->where('id', $karyawan_id)->first();
+    @endphp
+
+    <h5>GAJI BARANG   <strong style="text-transform: uppercase;">{{ $karyawan->nama_karyawan }}</strong></h5>
     <div class="card mb-3">
         <div class="card-header bg-primary text-white">Filter Data Gaji Barang</div>
         <div class="card-body">
@@ -123,7 +128,7 @@
                                     <tr>
                                         <td colspan="3"></td>
                                         <td><strong>Total Gaji</strong></td>
-                                        <td colspan="1">{{$gaji}}</td>
+                                        <td colspan="1" class="text-end">@currency($gaji)</td>
                                     </tr>
                                 </tfoot>
                             </table>
