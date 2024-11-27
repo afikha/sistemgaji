@@ -144,6 +144,18 @@ class AdminKaryawanController extends Controller
                 ->with('error', 'Karyawan tidak ditemukan!');
         }
 
+        // Cek apakah data upah untuk jabatan karyawan ada di tabel 'upah'
+        $upah = DB::table('upah')
+            ->where('jabatan', $data->jabatan_karyawan)
+            ->first(); // Cek apakah ada data upah untuk jabatan tersebut
+
+        // Jika data upah tidak ada, beri peringatan dan jangan arahkan ke halaman gaji
+        if (!$upah) {
+            return redirect()->route('indexKaryawan')
+                ->with('error', 'Data upah untuk jabatan ' . $data->jabatan_karyawan . ' belum diisi. Silakan inputkan data upah terlebih dahulu.');
+        }
+
+
         // Jika jabatan karyawan 'tenun', arahkan ke halaman datatenun
         if ($data->jabatan_karyawan == 'Tenun') {
             return redirect()->route('indexGajiTenun', $id);

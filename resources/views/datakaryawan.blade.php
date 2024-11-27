@@ -30,6 +30,12 @@
     <!-- /.container  -->
 
     <div class="container">
+        <!-- Menampilkan Pesan Error jika ada -->
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <h5>DATA KARYAWAN</h5>
         <div class="mb-3">
             <a href="{{route('addViewKaryawan')}}" class="btn" style="background-color: #007bff; color: white;">+ Tambah Data</a><br /><br />
