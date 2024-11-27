@@ -23,13 +23,6 @@
                 <label for="upah" class="form-label">Upah :</label>
                 <input name="upah" class="form-control" id="upah" placeholder="Masukkan upah" value="{{$data->upah}}">
             </div>
-            <div class="form-check">
-                <!-- Hidden input untuk nilai default -->
-                <input type="hidden" name="is_upah" value="0">
-                <!-- Checkbox -->
-                <input name="is_upah" type="checkbox" class="form-check-input" id="is_upah" value="1" {{ $data->is_upah ? 'checked' : '' }}>
-                <label class="form-check-label" for="is_upah">Simpan Hanya Satu Kali</label>
-            </div>
             <button type="submit" class="btn btn-save">Simpan</button>
             <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ route('indexUpah') }}'">Batal</button>
         </form>

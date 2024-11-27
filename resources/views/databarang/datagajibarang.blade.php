@@ -94,9 +94,9 @@
                                     <tr>
                                         <th>Tanggal</th>
                                         <th>Minggu</th>
-                                        <th>Barang Jadi</th>
-                                        <th>Barang Proses</th>
-                                        <th>Sisa Bahan Proses</th>
+                                        <th>Barang Masuk</th>
+                                        <th>Barang Keluar</th>
+                                        <th>Sisa Proses Sebelumnya</th>
                                         <th>Total Pengerjaan</th>
                                         <th>Aksi</th>
                                     </tr>

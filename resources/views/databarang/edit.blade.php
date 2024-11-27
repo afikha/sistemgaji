@@ -18,7 +18,7 @@
             @csrf
             <div class="form-group">
                 <label for="tanggal" class="form-label">Tanggal :</label>
-                <input type="date" name="tanggal" value="{{$data->tanggal}}" class="form-control" id="tanggal" readonly>
+                <input type="date" name="tanggal" value="{{$data->tanggal}}" class="form-control" id="tanggal">
                 <input type="hidden" name="id" value="{{$data->id}}" class="form-control" id="id">
                 <input type="hidden" name="karyawan_id" value="{{ $data->karyawan_id }}">
             </div>
@@ -35,7 +35,7 @@
                 <input type="number" name="barangkeluar" value="{{$data->barang_proses}}" class="form-control" id="barangkeluar">
             </div>
             <div class="form-group">
-                <label for="sisabahan" class="form-label">Sisa Bahan :</label>
+                <label for="sisabahan" class="form-label">Sisa Proses Sebelumnya :</label>
                 <input type="number" name="sisabahan" value="{{$data->sisabahan_proses}}" class="form-control" id="sisabahan">
             </div>
             <div class="form-group">

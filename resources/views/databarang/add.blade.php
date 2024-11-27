@@ -43,7 +43,7 @@
                 <input type="number" name="barangkeluar" class="form-control" id="barangkeluar" value="0">
             </div>
             <div class="form-group">
-                <label for="sisabahan" class="form-label">Sisa Bahan :</label>
+                <label for="sisabahan" class="form-label">Sisa Proses Sebelumnya :</label>
                 <input type="number" name="sisabahan" class="form-control" id="sisabahan" value="0">
             </div>
             <div class="form-group">
