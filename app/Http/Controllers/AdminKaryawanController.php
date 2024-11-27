@@ -155,6 +155,17 @@ class AdminKaryawanController extends Controller
                 ->with('error', 'Data upah untuk jabatan ' . $data->jabatan_karyawan . ' belum diisi. Silakan inputkan data upah terlebih dahulu.');
         }
 
+        // Cek apakah upah untuk jabatan 'thr tenun' sudah ada
+        if ($data->jabatan_karyawan == 'Tenun') {
+            $thr_tenun = DB::table('upah')
+                ->where('jabatan', 'thr tenun')
+                ->first(); // Cek apakah ada data upah untuk 'thr tenun'
+
+            if (!$thr_tenun) {
+                return redirect()->route('indexKaryawan')
+                    ->with('error', 'Upah untuk "thr tenun" belum diisi. Silakan inputkan data upah terlebih dahulu.');
+            }
+        }
 
         // Jika jabatan karyawan 'tenun', arahkan ke halaman datatenun
         if ($data->jabatan_karyawan == 'Tenun') {
