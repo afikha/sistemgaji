@@ -135,6 +135,7 @@ class AdminGajiBarangController extends Controller
     {
         $id = $request->id;
         $tanggal = $request->tanggal;
+        $minggu = $request->minggu;
         $barangmasuk = $request->barangmasuk;
         $barangkeluar = $request->barangkeluar;
         $sisabahan = $request->sisabahan;
@@ -145,6 +146,7 @@ class AdminGajiBarangController extends Controller
 
         $update = DB::table('gajibarang')->where('id', $id)->update([
             'tanggal' => $tanggal,
+            'minggu' => $minggu,
             'barang_jadi' => $barangmasuk,
             'barang_proses' => $barangkeluar,
             'sisabahan_proses' => $sisabahan,

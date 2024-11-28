@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label for="minggu" class="form-label">Minggu ke- :</label>
-                <input type="number" name="minggu" class="form-control" id="minggu" value="{{ $data->minggu }}">
+                <input type="number" name="minggu" class="form-control" id="minggu" required value="{{ $data->minggu }}">
             </div>
             <div class="form-group">
                 <label for="barangmasuk" class="form-label">Barang Masuk :</label>
