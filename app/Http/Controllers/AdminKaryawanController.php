@@ -34,8 +34,8 @@ class AdminKaryawanController extends Controller
     public function create(Request $request)
     {
         // Mengambil data dari request
-        $nama_karyawan = $request->nama_karyawan;
-        $alamat = $request->alamat;
+        $nama_karyawan = ucwords(strtolower($request->nama_karyawan));
+        $alamat = ucwords(strtolower($request->alamat));
         $jabatan_karyawan = $request->jabatan_karyawan;
 
         // Insert data ke tabel karyawan
@@ -81,8 +81,8 @@ class AdminKaryawanController extends Controller
 
         // Mengambil data dari request
         $id = $request->id;
-        $nama_karyawan = $request->nama_karyawan;
-        $alamat = $request->alamat;
+        $nama_karyawan = ucwords(strtolower($request->nama_karyawan));
+        $alamat = ucwords(strtolower($request->alamat));
         $jabatan_karyawan = $request->jabatan_karyawan;
 
         // Melakukan update data karyawan

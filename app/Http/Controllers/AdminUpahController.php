@@ -32,7 +32,7 @@ class AdminUpahController extends Controller
     public function create(Request $request)
     {
         // Mengambil data dari request
-        $jabatan = $request->jabatan;
+        $jabatan = ucwords(strtolower($request->jabatan));
         $upah = $request->upah;
 
         // Cek apakah sudah ada jabatan yang sama di database (case-insensitive)
@@ -85,7 +85,7 @@ class AdminUpahController extends Controller
             'upah' => 'required|integer|min:0',
         ]);
 
-        $jabatan = $request->jabatan;
+        $jabatan = ucwords(strtolower($request->jabatan));
 
         // Cek apakah sudah ada jabatan yang sama di database (case-insensitive), kecuali untuk ID yang sedang diupdate
         $exists = DB::table('upah')
