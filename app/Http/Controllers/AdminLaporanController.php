@@ -21,9 +21,9 @@ class AdminLaporanController extends Controller
                 'karyawan.nama_karyawan', 
                 'karyawan.jabatan_karyawan', 
                 'gajitenun.gaji', 
-                'gajitenun.update_at as tanggal_penggajian'
+                'gajitenun.tanggal as tanggal_penggajian'
             )
-            ->orderBy('gajitenun.update_at', 'desc')
+            ->orderBy('gajitenun.tanggal', 'desc')
             ->get();
 
         // Mendapatkan username pengguna yang sedang login

@@ -10,7 +10,7 @@ class gajitenun extends Model
     use HasFactory;
 
     protected $table = 'gajitenun';
-    protected $fillable = ['karyawan_id', 'gaji', 'update_at'];
+    protected $fillable = ['karyawan_id', 'gaji', 'tanggal'];
 
     public function karyawan()
     {
