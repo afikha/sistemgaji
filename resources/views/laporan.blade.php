@@ -97,13 +97,14 @@
                 <tbody>
                     @foreach ($dataLaporan as $laporan)
                     <tr>
-                        <td>{{ $laporan->nama_karyawan }}</td>
-                        <td>{{ $laporan->jabatan_karyawan }}</td>
-                        <td>{{ $laporan->gaji }}</td>
-                        <td>{{ $laporan->tanggal_penggajian }}</td>
+                        <td>{{ $laporan['nama_karyawan'] }}</td>
+                        <td>{{ $laporan['jabatan_karyawan'] }}</td>
+                        <td>@currency($laporan['gaji'])</td>
+                        <td>{{ $laporan['tanggal_penggajian'] }}</td>
                     </tr>
-                @endforeach                
+                    @endforeach                
                 </tbody>
+
             </table>
         </div>
     </div>
@@ -173,7 +174,7 @@
             var mm = String(today.getMonth() + 1).padStart(2, '0'); // Bulan ditambah 1 karena dimulai dari 0
             var dd = String(today.getDate()).padStart(2, '0');
 
-            var maxDate = `${yyyy}-${mm}-${dd}`;
+            var maxDate = ${yyyy}-${mm}-${dd};
 
             // Tetapkan atribut max ke input tanggal
             minDateInput.setAttribute('max', maxDate);
