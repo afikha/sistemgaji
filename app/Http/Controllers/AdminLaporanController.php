@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Karyawan;
 use App\Models\GajiTenun;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class AdminLaporanController extends Controller
 {
@@ -16,7 +17,7 @@ class AdminLaporanController extends Controller
      */
     public function index()
     {
-        // Mengambil data dari tabel karyawan dan gaji tenun
+        // Mengambil data dari tabel gaji tenun dengan informasi karyawan
         $dataGajiTenun = GajiTenun::join('karyawan', 'gajitenun.karyawan_id', '=', 'karyawan.id')
             ->select(
                 'karyawan.nama_karyawan', 
@@ -27,12 +28,18 @@ class AdminLaporanController extends Controller
             ->orderBy('gajitenun.tanggal', 'desc')
             ->get();
 
-        // Data Gaji Barang (berdasarkan tabel upah)
+        // Data Gaji Barang (berdasarkan tabel upah dan gaji barang)
         $dataGajiBarang = [];
         $karyawanList = Karyawan::all();
 
         foreach ($karyawanList as $karyawan) {
-            // Ambil upah berdasarkan jabatan
+            // Mengecek apakah karyawan terkait dengan gaji tenun (atau pengecualian lainnya)
+            // Misalnya, pengecualian jika jabatan karyawan adalah "Tenun" atau lainnya
+            if ($karyawan->jabatan_karyawan == 'Tenun') {
+                continue; // Lewati perhitungan gaji barang untuk jabatan 'Tenun'
+            }
+            
+            // Ambil upah berdasarkan jabatan karyawan
             $upah = DB::table('upah')
                 ->where('jabatan', $karyawan->jabatan_karyawan)
                 ->value('upah');
@@ -42,13 +49,27 @@ class AdminLaporanController extends Controller
                 $upah = 0;
             }
 
-            $tanggal = now()->subDays(rand(0, 30)); // Random tanggal untuk contoh
+            // Ambil data gaji barang yang sudah diinputkan
+            $gajiBarang = DB::table('gajibarang')
+                ->where('karyawan_id', $karyawan->id)
+                ->get();
 
+            $gajiTotal = 0;
+
+            // Hitung total gaji barang berdasarkan data yang ada
+            foreach ($gajiBarang as $gb) {
+                $gajiTotal += $gb->total_pengerjaan * $upah;
+            }
+
+            $tanggal = now()->subDays(rand(0, 30)); // Random tanggal untuk contoh
+            $minggu = $tanggal->weekOfYear; // Menentukan minggu ke
+
+            // Menambahkan data gaji barang untuk karyawan ini
             $dataGajiBarang[] = [
                 'nama_karyawan' => $karyawan->nama_karyawan,
                 'jabatan_karyawan' => $karyawan->jabatan_karyawan,
-                'minggu' => $tanggal->weekOfYear, // Menentukan minggu ke
-                'gaji' => $upah,
+                'minggu' => $minggu, // Menentukan minggu ke
+                'gaji' => $gajiTotal, // Total gaji barang berdasarkan pengerjaan
                 'tanggal_penggajian' => $tanggal->format('Y-m-d'),
             ];
         }
