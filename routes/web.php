@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminKaryawanController;
 use App\Http\Controllers\AdminGajiTenunController;
 use App\Http\Controllers\AdminGajiBarangController;
 use App\Http\Controllers\AdminUpahController;
+use App\Http\Controllers\AdminLaporanController;
 use App\Http\Controllers\AuthController;
 
 //Auth
@@ -45,6 +46,8 @@ Route::get('/databarang/edit/{id}', [AdminGajiBarangController::class, 'edit'])-
 Route::post('/databarang/update', [AdminGajiBarangController::class, 'update'])->name('updateGajiBarang');
 Route::get('/databarang/delete/{id}', [AdminGajiBarangController::class, 'delete'])->name('deleteGajiBarang');
 
+
+Route::get('/laporan', [AdminLaporanController::class, 'index'])->name('laporan');
 // =================================================================================================================
 Route::get('/', function () {
     return view('welcome');

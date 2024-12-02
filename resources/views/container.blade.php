@@ -5,6 +5,9 @@
   <li class="nav-item">
       <a class="nav-link {{ Request::is('indexUpah') ? 'active' : '' }}" href="{{ url('/upah/upah') }}">Upah Karyawan</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link {{ Request::is('laporan') ? 'active' : '' }}" href="{{ url('/laporan') }}">Laporan Karyawan</a>
+</li>
 </ul>
 
 <script>
