@@ -33,14 +33,27 @@ class AdminKaryawanController extends Controller
 
     public function create(Request $request)
     {
+        // Validasi data
+        $request->validate([
+            'nama_karyawan' => 'required|string|max:255',
+            'NIK' => 'required|integer|unique:karyawan,NIK',
+            'alamat' => 'required|string|max:255',
+            'jabatan_karyawan' => 'required|string|max:255',
+        ], [
+            'NIK.unique' => 'NIK yang Anda masukkan sudah terdaftar. Silakan gunakan NIK lain.',
+            'NIK.required' => 'NIK wajib diisi.',
+            'NIK.integer' => 'NIK harus berupa angka.',
+        ]);
         // Mengambil data dari request
         $nama_karyawan = ucwords(strtolower($request->nama_karyawan));
+        $NIK = $request->NIK;
         $alamat = ucwords(strtolower($request->alamat));
         $jabatan_karyawan = $request->jabatan_karyawan;
 
         // Insert data ke tabel karyawan
         $add = DB::table('karyawan')->insert([
             'nama_karyawan' => $nama_karyawan,
+            'NIK' => $NIK,
             'alamat' => $alamat,
             'jabatan_karyawan' => $jabatan_karyawan,
         ]);
@@ -75,19 +88,26 @@ class AdminKaryawanController extends Controller
         $request->validate([
             'id' => 'required|exists:karyawan,id',
             'nama_karyawan' => 'required|string|max:255',
-            'alamat' => 'required|string',
+            'NIK' => 'required|integer|unique:karyawan,NIK,' . $request->id,
+            'alamat' => 'required|string|max:255',
             'jabatan_karyawan' => 'required|string|max:255',
+        ], [
+            'NIK.unique' => 'NIK yang Anda masukkan sudah terdaftar. Silakan gunakan NIK lain.',
+            'NIK.required' => 'NIK wajib diisi.',
+            'NIK.integer' => 'NIK harus berupa angka.',
         ]);
-
+        
         // Mengambil data dari request
         $id = $request->id;
         $nama_karyawan = ucwords(strtolower($request->nama_karyawan));
+        $NIK = $request->NIK;
         $alamat = ucwords(strtolower($request->alamat));
         $jabatan_karyawan = $request->jabatan_karyawan;
 
         // Melakukan update data karyawan
         $update = DB::table('karyawan')->where('id', $id)->update([
             'nama_karyawan' => $nama_karyawan,
+            'NIK' => $NIK,
             'alamat' => $alamat,
             'jabatan_karyawan' => $jabatan_karyawan,
             'update_at' => now(), // Mengupdate timestamp untuk kolom update_at

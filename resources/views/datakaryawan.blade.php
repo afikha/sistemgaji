@@ -53,6 +53,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama Karyawan</th>
+                                                <th>NIK Karyawan</th>
                                                 <th>Alamat</th>
                                                 <th>Jobdesk</th>
                                                 <th>Aksi</th>
@@ -63,6 +64,7 @@
                                             <tr>
                                                 <td>{{$loop->iteration}}.</td>
                                                 <td class="text-start">{{$d->nama_karyawan}}</td>
+                                                <td class="text-start">{{$d->NIK}}</td>
                                                 <td class="text-start">{{$d->alamat}}</td>
                                                 <td class="text-start">{{$d->jabatan_karyawan}}</td>
                                                 <td>

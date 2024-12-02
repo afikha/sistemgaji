@@ -21,15 +21,18 @@ class AdminGajiTenunController extends Controller
                 ->first()->upah;
 
             if ($tahun_awal == null) {
+                 // Jika tahun awal tidak diberikan, ambil semua data karyawan
                 $data = DB::table('gajitenun')
                     ->where('karyawan_id', $karyawan_id)
                     ->get();
             } else {
+                 // Cek data awal dari tahun sebelumnya
                 $cekdataawal = DB::table('gajitenun')
                     ->whereYear('tanggal', $tahun_awal - 1)
                     ->where('karyawan_id', $karyawan_id)
                     ->where('minggu', 1)
                     ->first();
+                // Jika ada data di tahun sebelumnya, cek data minggu pertama di tahun $tahun_awal
                 if ($cekdataawal != null) {
                     $cekdataawal = DB::table('gajitenun')
                         ->whereYear('tanggal', $tahun_awal)
@@ -43,14 +46,15 @@ class AdminGajiTenunController extends Controller
                         ->where('minggu', 1)
                         ->first();
                 }
+                // Jika ditemukan data awal ($cekdataawal), maka dibuat rentang waktu 343 hari dari tanggal awal untuk mengambil data.
                 if ($cekdataawal != null) {
                     $tanggalakhir = Carbon::createFromFormat('Y-m-d', $cekdataawal->tanggal)->addDays(343);
                     $data = DB::table('gajitenun')
                         ->where('karyawan_id', $karyawan_id)
                         ->whereBetween('tanggal', [$cekdataawal->tanggal, $tanggalakhir->format('Y-m-d')])
                         ->get();
-                    //dd($data);
                 } else {
+                    // Jika tidak ada data awal, variabel $data akan diisi array kosong.
                     $data = [];
                 }
             }

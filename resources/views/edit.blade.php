@@ -12,12 +12,25 @@
     <!-- /.navbar -->
     <div class="container">
         <h3>Edit Data Karyawan</h3>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{route('updateKaryawan')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <input name="id" type="hidden" value="{{$data->id}}">
             <div class="form-group">
                 <label for="namakaryawan" class="form-label">Nama Karyawan :</label>
                 <input name="nama_karyawan" type="text" class="form-control" id="namakaryawan" placeholder="Masukkan nama" required oninput="validateName(event)" value="{{$data->nama_karyawan}}">
+            </div>
+            <div class="form-group">
+                <label for="NIK" class="form-label">NIK Karyawan :</label>
+                <input name="NIK" type="text" class="form-control" id="NIK" placeholder="Masukkan NIK" value="{{$data->NIK}}">
             </div>
             <div class="form-group">
                 <label for="alamat" class="form-label">Alamat Karyawan :</label>

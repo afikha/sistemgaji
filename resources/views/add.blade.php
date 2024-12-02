@@ -12,6 +12,16 @@
     <!-- /.navbar -->
     <div class="container">
         <h3>Tambah Data Karyawan</h3>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('addViewKaryawan') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
@@ -20,13 +30,17 @@
 
             </div>
             <div class="form-group">
+                <label for="NIK" class="form-label">NIK Karyawan :</label>
+                <input name="NIK" type="text" class="form-control" id="NIK" placeholder="Masukkan NIK">
+            </div>
+            <div class="form-group">
                 <label for="alamat" class="form-label">Alamat Karyawan :</label>
                 <input name="alamat" type="text" class="form-control" id="alamat" placeholder="Masukkan alamat">
             </div>
             <div class="form-group">
-                <label for="jabatan_karyawan" class="form-label">Jabatan :</label>
+                <label for="jabatan_karyawan" class="form-label">Jobdesk :</label>
                 <select name="jabatan_karyawan" class="form-control" id="jabatan_karyawan">
-                    <option value="">Pilih Jabatan</option>
+                    <option value="">Pilih Jobdesk</option>
                     @foreach($jabatanList as $jabatan)
                         <option value="{{ $jabatan->jabatan }}">{{ $jabatan->jabatan }}</option>
                     @endforeach
