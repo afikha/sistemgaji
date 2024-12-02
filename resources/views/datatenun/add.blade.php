@@ -25,9 +25,14 @@
         <h3>Tambah Data Pengerjaan Gaji Tenun</h3>
         <form action="{{ route('addViewGajiTenun') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="minggu" class="form-label">Minggu Ke - :</label>
-                <input name="minggu" class="form-control" id="mingguKe" placeholder="Masukkan Minggu Ke-">
+                <input name="number" class="form-control" id="mingguKe" placeholder="Masukkan Minggu Ke-">
+                <input type="hidden" name="karyawan_id" value="{{$karyawan_id}}" class="form-control" id="karyawan_id" placeholder="Karyawan ID">
+            </div> --}}
+            <div class="form-group">
+                <label for="minggu" class="form-label">Minggu ke- :</label>
+                <input type="number" name="minggu" class="form-control" id="minggu" required>
                 <input type="hidden" name="karyawan_id" value="{{$karyawan_id}}" class="form-control" id="karyawan_id" placeholder="Karyawan ID">
             </div>
             <div class="form-group">

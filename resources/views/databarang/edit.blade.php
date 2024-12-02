@@ -13,6 +13,14 @@
     @include("header")
     <!-- /.navbar -->
     <div class="container">
+        @if (Session::get('failed'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Gagal!</strong> {{Session::get('failed')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
         <h3>Edit Data Pengerjaan Gaji Barang</h3>
         <form action="{{route('updateGajiBarang')}}" method="POST">
             @csrf
