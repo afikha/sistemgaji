@@ -12,6 +12,16 @@
     <!-- /.navbar -->
     <div class="container">
         <h3>Edit Data Upah Karyawan</h3>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('updateUpah') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input name="id" type="hidden" value="{{$data->id}}">

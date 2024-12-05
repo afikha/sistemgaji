@@ -8176,7 +8176,13 @@
   
   .heading-section {
     font-size: 28px;
-    color: #000; }
+    color: #000;
+    font-weight: 200;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+   }
   
   .img {
     background-size: cover;

@@ -5,67 +5,73 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Laporan Pasien</title>
+    <title>Sistem Penggajian Pabrik Sarung Goyor</title>
 
-    <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/logo-klinik.png') }}">
-    <link rel="stylesheet" href="assets/style.css">
-    <link rel="stylesheet" href="{{ asset('admin-laporan') }}/dist/css/adminlte.min.css">
+    <!-- Custom styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin-lte') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ asset('admin-lte') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ asset('admin-lte') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ asset('admin-lte') }}/dist/css/adminlte.min.css">
 
     <style>
+        h5 {
+            font-weight: normal; /* Mengurangi ketebalan teks */
+        }
+    
         @media print {
             body {
                 font-size: 12px;
             }
-
+    
             .btn,
             .form-label,
             #minDate,
             #maxDate,
             #applyFilter,
-            #printReport {
+            #printTable {
                 display: none;
-                /* Sembunyikan elemen yang tidak diperlukan saat cetak */
             }
-
+    
             table {
                 width: 100%;
                 border-collapse: collapse;
             }
-
+    
             table th,
             table td {
                 border: 1px solid #000;
                 padding: 8px;
             }
-
+    
             .table-responsive {
                 overflow: visible;
-                /* Pastikan tabel tetap terlihat */
             }
         }
     </style>
+    
 </head>
 
 <body>
+    <!-- Navbar -->
     @include("header")
+    <!-- /.navbar -->
+    <!-- container -->
+    @include("container")
+    <!-- /.container  -->
+
     <div class="container mt-4">
-        @include("container")
-        <h3 class="text-center mt-4">Data Laporan Karyawan</h3>
+        <!-- Menampilkan Pesan Error jika ada -->
+        @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
+
+        <h5>DATA LAPORAN KARYAWAN</h5>
         <div class="row mb-3">
             <div class="col-md-3">
                 <label for="minDate" class="form-label">Tanggal Mulai:</label>
@@ -83,7 +89,6 @@
             </div>
         </div>
 
-
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                 <thead>
@@ -97,42 +102,42 @@
                 <tbody>
                     @foreach ($dataLaporan as $laporan)
                     <tr>
-                        <td>{{ $laporan['nama_karyawan'] }}</td>
-                        <td>{{ $laporan['jabatan_karyawan'] }}</td>
-                        <td>@currency($laporan['gaji'])</td>
+                        <td class="text-start">{{ $laporan['nama_karyawan'] }}</td>
+                        <td class="text-start">{{ $laporan['jabatan_karyawan'] }}</td>
+                        <td class="text-end">@currency($laporan['gaji'])</td>
                         <td>{{ $laporan['tanggal_penggajian'] }}</td>
                     </tr>
-                    @endforeach                
+                    @endforeach
                 </tbody>
-
             </table>
         </div>
     </div>
 
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- JavaScript -->
+    <script src="{{ asset('admin-lte') }}/plugins/jquery/jquery.min.js"></script>
+    <script src="{{ asset('admin-lte') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('admin-lte') }}/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('admin-lte') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('admin-lte') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="{{ asset('admin-lte') }}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#dataTable').DataTable();
         });
+
+        document.getElementById('printTable').addEventListener('click', function () {
+            var tableContent = document.querySelector('.table-responsive').innerHTML;
+            var newWindow = window.open('', '', 'width=800,height=600');
+            newWindow.document.write('<html><head><title>Cetak Laporan</title>');
+            newWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
+            newWindow.document.write('<style>table { width: 100%; border-collapse: collapse; } table, th, td { border: 1px solid black; padding: 8px; }</style>');
+            newWindow.document.write('</head><body>');
+            newWindow.document.write(tableContent);
+            newWindow.document.write('</body></html>');
+            newWindow.document.close();
+            newWindow.print();
+        });
     </script>
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
     <script>
         $(document).ready(function () {
             // Inisialisasi DataTable

@@ -40,10 +40,14 @@ class AdminKaryawanController extends Controller
             'alamat' => 'required|string|max:255',
             'jabatan_karyawan' => 'required|string|max:255',
         ], [
-            'NIK.unique' => 'NIK yang Anda masukkan sudah terdaftar. Silakan gunakan NIK lain.',
+            'nama_karyawan.required' => 'Nama karyawan wajib diisi.',
             'NIK.required' => 'NIK wajib diisi.',
             'NIK.integer' => 'NIK harus berupa angka.',
+            'NIK.unique' => 'NIK yang Anda masukkan sudah terdaftar. Silakan gunakan NIK lain.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'jabatan_karyawan.required' => 'Jabatan karyawan wajib diisi.',
         ]);
+
         // Mengambil data dari request
         $nama_karyawan = ucwords(strtolower($request->nama_karyawan));
         $NIK = $request->NIK;
@@ -92,9 +96,12 @@ class AdminKaryawanController extends Controller
             'alamat' => 'required|string|max:255',
             'jabatan_karyawan' => 'required|string|max:255',
         ], [
-            'NIK.unique' => 'NIK yang Anda masukkan sudah terdaftar. Silakan gunakan NIK lain.',
+            'nama_karyawan.required' => 'Nama karyawan wajib diisi.',
             'NIK.required' => 'NIK wajib diisi.',
             'NIK.integer' => 'NIK harus berupa angka.',
+            'NIK.unique' => 'NIK yang Anda masukkan sudah terdaftar. Silakan gunakan NIK lain.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'jabatan_karyawan.required' => 'Jabatan karyawan wajib diisi.',
         ]);
         
         // Mengambil data dari request

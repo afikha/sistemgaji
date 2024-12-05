@@ -31,6 +31,18 @@ class AdminUpahController extends Controller
 
     public function create(Request $request)
     {
+        // Validasi data input
+        $request->validate([
+            'jabatan' => 'required|string|max:255',
+            'upah' => 'required|integer|min:0',
+        ], [
+            'jabatan.required' => 'Jabatan harus diisi.',
+            'jabatan.string' => 'Jabatan harus berupa teks.',
+            'upah.required' => 'Upah harus diisi.',
+            'upah.integer' => 'Upah harus berupa angka.',
+            'upah.min' => 'Upah tidak boleh kurang dari 0.',
+        ]);
+
         // Mengambil data dari request
         $jabatan = ucwords(strtolower($request->jabatan));
         $upah = $request->upah;
@@ -45,7 +57,6 @@ class AdminUpahController extends Controller
             return redirect()->route('addViewUpah')
                 ->with('failed', 'Jabatan yang sama sudah ada di database');
         }
-
 
         // Insert data ke tabel upah
         $add = DB::table('upah')->insert([
@@ -78,11 +89,18 @@ class AdminUpahController extends Controller
 
     public function update(Request $request)
     {
-        // Validasi data yang masuk
+        // Validasi data input
         $request->validate([
             'id' => 'required|exists:upah,id',
             'jabatan' => 'required|string|max:255',
             'upah' => 'required|integer|min:0',
+        ], [
+            'id.required' => 'ID harus ada.',
+            'jabatan.required' => 'Jabatan harus diisi.',
+            'jabatan.string' => 'Jabatan harus berupa teks.',
+            'upah.required' => 'Upah harus diisi.',
+            'upah.integer' => 'Upah harus berupa angka.',
+            'upah.min' => 'Upah tidak boleh kurang dari 0.',
         ]);
 
         $jabatan = ucwords(strtolower($request->jabatan));

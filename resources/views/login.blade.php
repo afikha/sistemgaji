@@ -11,6 +11,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="{{asset('assets/style-login.css')}}">
+    <style>
+        body {
+            background: url('{{ asset("assets/sarung.jpg") }}') no-repeat center center fixed; /* Pastikan path gambar benar */
+            background-size: cover; /* Agar gambar menutupi seluruh layar */
+            height: 100vh; /* Pastikan body menutupi seluruh layar */
+        }
+
+    </style>
 
 </head>
 
