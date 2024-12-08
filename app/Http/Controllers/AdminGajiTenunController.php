@@ -97,6 +97,37 @@ class AdminGajiTenunController extends Controller
                 ->with('failed', 'Tanggal dan minggu harus diisi!');
         }
 
+        // Dapatkan tahun dari tanggal yang dimasukkan
+        $tahun = Carbon::parse($tanggal)->year;
+
+        // Cek apakah sudah ada minggu ke-1 di tahun yang sama
+        $cekMinggu1 = DB::table('gajitenun')
+            ->where('karyawan_id', $karyawan_id)
+            ->whereYear('tanggal', $tahun)
+            ->where('minggu', 1)
+            ->exists();
+
+        // Jika minggu ke-1 sudah ada di tahun yang sama, maka tahun berikutnya harus dimulai dari minggu ke-1
+        if ($minggu == 1 && $cekMinggu1) {
+            return redirect()->route('addViewGajiTenun', ['karyawan_id' => $karyawan_id])
+                ->with('failed', 'Minggu ke-1 sudah ada pada tahun sebelumnya, harap mulai lagi dari minggu ke-1 di tahun ini!');
+        }
+
+        // Jika minggu lebih dari 1, cek apakah minggu sebelumnya sudah ada di tahun yang sama
+        if ($minggu > 1) {
+            $cekMingguSebelumnya = DB::table('gajitenun')
+                ->where('karyawan_id', $karyawan_id)
+                ->whereYear('tanggal', $tahun)
+                ->where('minggu', $minggu - 1)
+                ->exists();
+
+            if (!$cekMingguSebelumnya) {
+                return redirect()->route('addViewGajiTenun', ['karyawan_id' => $karyawan_id])
+                    ->with('failed', 'Periksa Minggu yang Anda inputkan. Minggu sebelumnya harus ada terlebih dahulu!');
+            }
+        }
+
+
         // Cek apakah minggu sudah ada dalam periode yang sama (sama karyawan_id dan tahun)
         $tahun_awal = Carbon::parse($tanggal)->year;
         $cekMinggu = DB::table('gajitenun')
@@ -232,8 +263,37 @@ class AdminGajiTenunController extends Controller
                 ->with('failed', 'Tanggal dan minggu harus diisi!');
         }
 
-        // Cek apakah minggu sudah ada dalam periode yang sama (sama karyawan_id dan tahun)
+        // Dapatkan tahun dari tanggal yang dimasukkan
         $tahun = Carbon::parse($tanggal)->year;
+
+        // Cek apakah minggu ke-1 sudah ada di tahun yang sama
+        $cekMinggu1 = DB::table('gajitenun')
+            ->where('karyawan_id', $karyawan_id)
+            ->whereYear('tanggal', $tahun)
+            ->where('minggu', 1)
+            ->exists();
+
+        // Jika minggu ke-1 sudah ada di tahun yang sama, maka tahun berikutnya harus dimulai dari minggu ke-1
+        if ($minggu == 1 && $cekMinggu1) {
+            return redirect()->route('editGajiTenun', ['id' => $id])
+                ->with('failed', 'Minggu ke-1 sudah ada pada tahun sebelumnya, harap mulai lagi dari minggu ke-1 di tahun ini!');
+        }
+
+        // Jika minggu lebih dari 1, cek apakah minggu sebelumnya sudah ada di tahun yang sama
+        if ($minggu > 1) {
+            $cekMingguSebelumnya = DB::table('gajitenun')
+                ->where('karyawan_id', $karyawan_id)
+                ->whereYear('tanggal', $tahun)
+                ->where('minggu', $minggu - 1)
+                ->exists();
+
+            if (!$cekMingguSebelumnya) {
+                return redirect()->route('editGajiTenun', ['id' => $id])
+                    ->with('failed', 'Minggu tidak valid. Minggu ke-' . $minggu . ' tidak dapat dimulai tanpa data minggu sebelumnya (Minggu ke-' . ($minggu - 1) . ').');
+            }
+        }
+
+        // Cek apakah minggu sudah ada dalam periode yang sama (sama karyawan_id dan tahun)
         $cekMinggu = DB::table('gajitenun')
             ->where('karyawan_id', $karyawan_id)
             ->whereYear('tanggal', $tahun)
@@ -245,32 +305,33 @@ class AdminGajiTenunController extends Controller
             return redirect()->route('editGajiTenun', ['id' => $id])
                 ->with('failed', 'Minggu ini sudah ada untuk periode tahun tersebut!');
         }
+
         // Cek tanggal tidak boleh lebih dari hari ini
-    if ($tanggal > Carbon::now()->format('Y-m-d')) {
-        return redirect()->route('editGajiTenun', ['id' => $id])
-            ->with('failed', 'Tanggal tidak boleh lebih dari hari ini!');
-    }
+        if ($tanggal > Carbon::now()->format('Y-m-d')) {
+            return redirect()->route('editGajiTenun', ['id' => $id])
+                ->with('failed', 'Tanggal tidak boleh lebih dari hari ini!');
+        }
 
-    // Menambahkan logika untuk memeriksa tanggal yang dimasukkan untuk minggu selanjutnya
-    if ($minggu > 1) {
-        // Cari tanggal minggu sebelumnya
-        $tanggalMingguSebelumnya = DB::table('gajitenun')
-            ->where('karyawan_id', $karyawan_id)
-            ->whereYear('tanggal', $tahun)
-            ->where('minggu', $minggu - 1)
-            ->first();
+        // Menambahkan logika untuk memeriksa tanggal yang dimasukkan untuk minggu selanjutnya
+        if ($minggu > 1) {
+            // Cari tanggal minggu sebelumnya
+            $tanggalMingguSebelumnya = DB::table('gajitenun')
+                ->where('karyawan_id', $karyawan_id)
+                ->whereYear('tanggal', $tahun)
+                ->where('minggu', $minggu - 1)
+                ->first();
 
-        if ($tanggalMingguSebelumnya) {
-            $tanggalMingguSebelumnya = Carbon::parse($tanggalMingguSebelumnya->tanggal);
-        
-            // Cek apakah tanggal yang dimasukkan lebih cepat dari 6 hari setelah tanggal minggu sebelumnya
-            $tanggalMinValid = $tanggalMingguSebelumnya->addDays(6); // Menambahkan 6 hari ke tanggal minggu sebelumnya
-            if (Carbon::parse($tanggal)->lt($tanggalMinValid)) {
-                return redirect()->route('editGajiTenun', ['id' => $id])
-                    ->with('failed', 'Tanggal harus lebih dari 6 hari setelah tanggal minggu sebelumnya!');
+            if ($tanggalMingguSebelumnya) {
+                $tanggalMingguSebelumnya = Carbon::parse($tanggalMingguSebelumnya->tanggal);
+
+                // Cek apakah tanggal yang dimasukkan lebih cepat dari 6 hari setelah tanggal minggu sebelumnya
+                $tanggalMinValid = $tanggalMingguSebelumnya->addDays(6); // Menambahkan 6 hari ke tanggal minggu sebelumnya
+                if (Carbon::parse($tanggal)->lt($tanggalMinValid)) {
+                    return redirect()->route('editGajiTenun', ['id' => $id])
+                        ->with('failed', 'Tanggal harus lebih dari 6 hari setelah tanggal minggu sebelumnya!');
+                }
             }
         }
-    }
 
         // Menghitung total pengerjaan sebagai jumlah hari 1 hingga hari 6
         $total_pengerjaan = $hari_1 + $hari_2 + $hari_3 + $hari_4 + $hari_5 + $hari_6;

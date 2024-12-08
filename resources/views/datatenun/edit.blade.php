@@ -28,7 +28,7 @@
             <input type="hidden" name="karyawan_id" value="{{ $data->karyawan_id }}">
             <div class="form-group">
                 <label for="minggu" class="form-label">Minggu Ke - :</label>
-                <input name="minggu" class="form-control" id="mingguKe" placeholder="Masukkan Minggu Ke-" value="{{$data->minggu}}">
+                <input type="number" name="minggu" class="form-control" id="mingguKe" placeholder="Masukkan Minggu Ke-" value="{{$data->minggu}}">
             </div>
             <div class="form-group">
                 <label for="tanggal" class="form-label">Tanggal :</label>

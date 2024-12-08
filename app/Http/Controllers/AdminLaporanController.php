@@ -36,7 +36,8 @@ class AdminLaporanController extends Controller
             if ($karyawan->jabatan_karyawan == 'Tenun') {
                 continue; // Lewati perhitungan gaji barang untuk jabatan 'Tenun'
             }
-            
+
+            // Ambil upah dari tabel 'upah' berdasarkan jabatan karyawan
             $upah = DB::table('upah')
                 ->where('jabatan', $karyawan->jabatan_karyawan)
                 ->value('upah');
@@ -45,46 +46,46 @@ class AdminLaporanController extends Controller
                 $upah = 0; // Defaultkan ke 0 jika upah tidak ditemukan
             }
         
+            // Ambil data gaji barang berdasarkan karyawan
             $gajiBarang = DB::table('gajibarang')
                 ->where('karyawan_id', $karyawan->id)
                 ->get();
         
             $gajiPerMinggu = []; // Array untuk menyimpan total gaji per minggu
-            $tanggalTerbaruPerMinggu = []; // Array untuk menyimpan tanggal terbaru per minggu
         
+            // Loop untuk mengumpulkan total pengerjaan per minggu
             foreach ($gajiBarang as $gb) {
-                $tanggal = Carbon::parse($gb->tanggal); // Konversi tanggal pengerjaan ke Carbon
-                $minggu = $tanggal->weekOfYear; // Tentukan minggu ke dalam tahun
-                $tahun = $tanggal->year; // Tentukan tahun pengerjaan
+                $minggu = $gb->minggu; // Gunakan minggu yang ada dalam tabel gajibarang
+                $tahun = Carbon::parse($gb->tanggal)->year; // Tentukan tahun berdasarkan tanggal pengerjaan
         
-                // Hitung total pengerjaan dan upah untuk minggu ini
+                // Hitung total pengerjaan untuk minggu ini
                 if (!isset($gajiPerMinggu[$tahun][$minggu])) {
-                    $gajiPerMinggu[$tahun][$minggu] = 0;
-                    $tanggalTerbaruPerMinggu[$tahun][$minggu] = $tanggal; // Inisialisasi tanggal terbaru
+                    $gajiPerMinggu[$tahun][$minggu] = 0; // Inisialisasi total pengerjaan per minggu
                 }
         
-                $gajiPerMinggu[$tahun][$minggu] += $gb->total_pengerjaan * $upah;
-        
-                // Perbarui tanggal terbaru jika tanggal saat ini lebih baru
-                if ($tanggal->greaterThan($tanggalTerbaruPerMinggu[$tahun][$minggu])) {
-                    $tanggalTerbaruPerMinggu[$tahun][$minggu] = $tanggal;
-                }
+                // Tambahkan total pengerjaan
+                $gajiPerMinggu[$tahun][$minggu] += $gb->total_pengerjaan;
             }
         
             // Tambahkan data gaji barang ke dalam array data laporan
             foreach ($gajiPerMinggu as $tahun => $mingguData) {
-                foreach ($mingguData as $minggu => $gajiTotal) {
+                foreach ($mingguData as $minggu => $totalPengerjaan) {
+                    // Hitung gaji per minggu (total pengerjaan * upah)
+                    $gajiTotal = $totalPengerjaan * $upah;
+        
+                    // Simpan data laporan per minggu
                     $dataGajiBarang[] = [
                         'nama_karyawan' => $karyawan->nama_karyawan,
                         'jabatan_karyawan' => $karyawan->jabatan_karyawan,
                         'minggu' => $minggu, // Minggu ke-berapa
                         'tahun' => $tahun, // Tahun pengerjaan
                         'gaji' => $gajiTotal, // Total gaji untuk minggu ini
-                        'tanggal_penggajian' => $tanggalTerbaruPerMinggu[$tahun][$minggu]->format('Y-m-d'), // Tanggal terbaru untuk minggu ini
+                        'tanggal_penggajian' => Carbon::now()->format('Y-m-d'), // Tanggal penggajian
                     ];
                 }
             }
         }
+
         // Gabungkan data gaji tenun dan gaji barang
         $dataLaporan = collect($dataGajiTenun)->merge($dataGajiBarang);
 
