@@ -36,17 +36,18 @@ class AdminKaryawanController extends Controller
         // Validasi data
         $request->validate([
             'nama_karyawan' => 'required|string|max:255',
-            'NIK' => 'required|integer|unique:karyawan,NIK',
+            'NIK' => 'required|digits:16|unique:karyawan,NIK,' . ($request->id ?? 'NULL'),
             'alamat' => 'required|string|max:255',
             'jabatan_karyawan' => 'required|string|max:255',
         ], [
             'nama_karyawan.required' => 'Nama karyawan wajib diisi.',
             'NIK.required' => 'NIK wajib diisi.',
-            'NIK.integer' => 'NIK harus berupa angka.',
+            'NIK.digits' => 'NIK harus terdiri dari 16 digit angka.',
             'NIK.unique' => 'NIK yang Anda masukkan sudah terdaftar. Silakan gunakan NIK lain.',
             'alamat.required' => 'Alamat wajib diisi.',
             'jabatan_karyawan.required' => 'Jabatan karyawan wajib diisi.',
         ]);
+        
 
         // Mengambil data dari request
         $nama_karyawan = ucwords(strtolower($request->nama_karyawan));
@@ -90,19 +91,19 @@ class AdminKaryawanController extends Controller
     {
         // Validasi data yang masuk
         $request->validate([
-            'id' => 'required|exists:karyawan,id',
             'nama_karyawan' => 'required|string|max:255',
-            'NIK' => 'required|integer|unique:karyawan,NIK,' . $request->id,
+            'NIK' => 'required|digits:16|unique:karyawan,NIK,' . ($request->id ?? 'NULL'),
             'alamat' => 'required|string|max:255',
             'jabatan_karyawan' => 'required|string|max:255',
         ], [
             'nama_karyawan.required' => 'Nama karyawan wajib diisi.',
             'NIK.required' => 'NIK wajib diisi.',
-            'NIK.integer' => 'NIK harus berupa angka.',
+            'NIK.digits' => 'NIK harus terdiri dari 16 digit angka.',
             'NIK.unique' => 'NIK yang Anda masukkan sudah terdaftar. Silakan gunakan NIK lain.',
             'alamat.required' => 'Alamat wajib diisi.',
             'jabatan_karyawan.required' => 'Jabatan karyawan wajib diisi.',
         ]);
+        
         
         // Mengambil data dari request
         $id = $request->id;

@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label for="NIK" class="form-label">NIK Karyawan :</label>
-                <input name="NIK" type="text" class="form-control" id="NIK" placeholder="Masukkan NIK">
+                <input name="NIK" type="text"  maxlength="16" class="form-control" id="NIK" placeholder="Masukkan NIK">
             </div>
             <div class="form-group">
                 <label for="alamat" class="form-label">Alamat Karyawan :</label>
