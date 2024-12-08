@@ -34,7 +34,7 @@
             @csrf
             <div class="form-group">
                 <label for="jabatan" class="form-label">Jobdesk :</label>
-                <input name="jabatan" class="form-control" id="jabatan" placeholder="Masukkan jobdesk">
+                <input name="jabatan" class="form-control" id="jabatan" placeholder="Masukkan jobdesk" >
             </div>
             <div class="form-group">
                 <label for="upah" class="form-label">Upah :</label>
@@ -44,5 +44,16 @@
             <button type="button" class="btn btn-cancel" onclick="window.location.href='{{ route('indexUpah') }}'">Batal</button>
         </form>
     </div>
+    <script>
+        document.getElementById('jabatan').addEventListener('input', function (event) {
+            const input = event.target;
+            const value = input.value;
+            // Hanya izinkan huruf, spasi, dan tanda baca dasar
+            const filteredValue = value.replace(/[^a-zA-Z\s]/g, '');
+            if (value !== filteredValue) {
+                input.value = filteredValue;
+            }
+        });
+    </script>    
 </body>
 </html>

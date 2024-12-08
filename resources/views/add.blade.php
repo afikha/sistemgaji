@@ -25,7 +25,7 @@
             @csrf
             <div class="form-group">
                 <label for="nama_karyawan" class="form-label">Nama Karyawan :</label>
-                <input name="nama_karyawan" type="text" class="form-control" id="nama_karyawan" placeholder="Masukkan nama" required oninput="validateName(event)">
+                <input name="nama_karyawan" type="text" class="form-control" id="nama_karyawan" placeholder="Masukkan nama">
 
             </div>
             <div class="form-group">
@@ -51,20 +51,15 @@
     </div>
     <script src="script.js"></script>
     <script>
-        function validateName(event) {
-            const input = event.target; // Mendapatkan elemen input
-            const errorMessage = document.getElementById("nameError");
-
-            // Menghapus karakter non-huruf
-            input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
-
-            // Menampilkan pesan kesalahan jika input tidak hanya huruf
-            if (/[^a-zA-Z\s]/.test(input.value)) {
-                errorMessage.style.display = 'block';
-            } else {
-                errorMessage.style.display = 'none';
-            }
-        }
-    </script>
+        document.getElementById('nama_karyawan').addEventListener('input', function (event) {
+            const input = event.target;
+            const value = input.value;
+            // Hanya izinkan huruf, spasi, dan tanda baca dasar
+            const filteredValue = value.replace(/[^a-zA-Z\s]/g, '');
+            if (value !== filteredValue) {
+                input.value = filteredValue;
+            }
+        });
+    </script>    
 </body>
 </html>

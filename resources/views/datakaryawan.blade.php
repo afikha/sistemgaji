@@ -95,7 +95,6 @@
             </section>
 
             <nav>
-                <script src="script.js"></script>
 
                 <!-- jQuery -->
                 <script src="{{ asset('admin-lte') }}/plugins/jquery/jquery.min.js"></script>

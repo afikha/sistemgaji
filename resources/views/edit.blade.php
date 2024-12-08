@@ -25,8 +25,8 @@
             @csrf
             <input name="id" type="hidden" value="{{$data->id}}">
             <div class="form-group">
-                <label for="namakaryawan" class="form-label">Nama Karyawan :</label>
-                <input name="nama_karyawan" type="text" class="form-control" id="namakaryawan" placeholder="Masukkan nama" required oninput="validateName(event)" value="{{$data->nama_karyawan}}">
+                <label for="nama_karyawan" class="form-label">Nama Karyawan :</label>
+                <input name="nama_karyawan" type="text" class="form-control" id="nama_karyawan" placeholder="Masukkan nama" value="{{$data->nama_karyawan}}">
             </div>
             <div class="form-group">
                 <label for="NIK" class="form-label">NIK Karyawan :</label>
@@ -36,15 +36,6 @@
                 <label for="alamat" class="form-label">Alamat Karyawan :</label>
                 <input name="alamat" type="text" class="form-control" id="alamat" placeholder="Masukkan alamat" value="{{$data->alamat}}">
             </div>
-            {{-- <div class="form-group">
-                <label for="jabatan_karyawan" class="form-label">Jabatan :</label>
-                <select name="jabatan_karyawan" class="form-control" id="jabatan_karyawan" value="{{$data->jabatan_karyawan}}">
-                    <option value="">Pilih Jabatan</option>
-                    @foreach($jabatanList as $jabatan)
-                        <option value="{{ $jabatan->jabatan }}">{{ $jabatan->jabatan }}</option>
-                    @endforeach
-                </select>
-            </div> --}}
             <div class="form-group">
                 <label for="jabatan_karyawan" class="form-label">Jabatan :</label>
                 <select name="jabatan_karyawan" class="form-control" id="jabatan_karyawan">
@@ -62,20 +53,15 @@
     </div>
     <script src="script.js"></script>
     <script>
-        function validateName(event) {
-            const input = event.target; // Mendapatkan elemen input
-            const errorMessage = document.getElementById("nameError");
-
-            // Menghapus karakter non-huruf
-            input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
-
-            // Menampilkan pesan kesalahan jika input tidak hanya huruf
-            if (/[^a-zA-Z\s]/.test(input.value)) {
-                errorMessage.style.display = 'block';
-            } else {
-                errorMessage.style.display = 'none';
-            }
-        }
-    </script>
+        document.getElementById('nama_karyawan').addEventListener('input', function (event) {
+            const input = event.target;
+            const value = input.value;
+            // Hanya izinkan huruf, spasi, dan tanda baca dasar
+            const filteredValue = value.replace(/[^a-zA-Z\s]/g, '');
+            if (value !== filteredValue) {
+                input.value = filteredValue;
+            }
+        });
+    </script>    
 </body>
 </html>

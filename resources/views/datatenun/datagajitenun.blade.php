@@ -79,7 +79,6 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">Data Mingguan dan Gaji Tenun</h3>
@@ -159,7 +158,6 @@
         <!-- /.container-fluid -->
       </section>
     </div>
-    <script src="script2.js"></script>
 
     <!-- jQuery -->
     <script src="{{ asset('admin-lte') }}/plugins/jquery/jquery.min.js"></script>
@@ -180,8 +178,6 @@
     <script src="{{ asset('admin-lte') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('admin-lte') }}/dist/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    {{-- <script src="{{ asset('admin-lte') }}/dist/js/demo.js"></script> --}}
     <!-- Page specific script -->
     <script>
       $(function() {
