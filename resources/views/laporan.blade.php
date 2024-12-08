@@ -128,7 +128,11 @@
         document.getElementById('printTable').addEventListener('click', function () {
             // Ambil elemen tabel tanpa DataTable tambahan
             var tableElement = document.querySelector('#dataTable');
-            
+    
+            // Ambil nilai tanggal dari input
+            var minDate = document.getElementById('minDate').value || 'Semua Tanggal';
+            var maxDate = document.getElementById('maxDate').value || 'Semua Tanggal';
+    
             // Simpan elemen DataTables tambahan yang akan disembunyikan
             var dataTableExtras = document.querySelectorAll('.dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate');
             dataTableExtras.forEach(el => el.style.display = 'none'); // Sembunyikan elemen tambahan
@@ -137,10 +141,19 @@
             var newWindow = window.open('', '', 'width=800,height=600');
             newWindow.document.write('<html><head><title>Cetak Laporan</title>');
             newWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
-            newWindow.document.write('<style>table { width: 100%; border-collapse: collapse; } table, th, td { border: 1px solid black; padding: 8px; }</style>');
+            newWindow.document.write('<style>');
+            newWindow.document.write('table { width: 100%; border-collapse: collapse; }');
+            newWindow.document.write('table, th, td { border: 1px solid black; padding: 8px; }');
+            newWindow.document.write('table td:nth-child(3) { text-align: right; }'); // Rata kanan untuk kolom gaji
+            newWindow.document.write('</style>');
             newWindow.document.write('</head><body>');
+    
+            // Tambahkan header laporan dan rentang tanggal
             newWindow.document.write('<h4>Data Laporan Karyawan</h4>');
-            newWindow.document.write(tableElement.outerHTML); // Cetak hanya tabel
+            newWindow.document.write('<p>Rentang Tanggal: <strong>' + minDate + '</strong> hingga <strong>' + maxDate + '</strong></p>');
+    
+            // Cetak tabel
+            newWindow.document.write(tableElement.outerHTML);
             newWindow.document.write('</body></html>');
             newWindow.document.close();
             newWindow.print();
@@ -148,7 +161,7 @@
             // Kembalikan elemen tambahan DataTables ke tampilan awal
             dataTableExtras.forEach(el => el.style.display = '');
         });
-    </script>    
+    </script>
     
     <script>
         $(document).ready(function () {
