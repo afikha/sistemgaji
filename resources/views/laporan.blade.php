@@ -32,10 +32,14 @@
             #minDate,
             #maxDate,
             #applyFilter,
-            #printTable {
-                display: none;
+            #printTable,
+            .dataTables_length,
+            .dataTables_filter,
+            .dataTables_info,
+            .dataTables_paginate {
+                display: none !important;
             }
-    
+        
             table {
                 width: 100%;
                 border-collapse: collapse;
@@ -48,7 +52,7 @@
             }
     
             .table-responsive {
-                overflow: visible;
+                overflow: visible !important;
             }
         }
     </style>
@@ -121,23 +125,31 @@
     <script src="{{ asset('admin-lte') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('admin-lte') }}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#dataTable').DataTable();
-        });
-
         document.getElementById('printTable').addEventListener('click', function () {
-            var tableContent = document.querySelector('.table-responsive').innerHTML;
+            // Ambil elemen tabel tanpa DataTable tambahan
+            var tableElement = document.querySelector('#dataTable');
+            
+            // Simpan elemen DataTables tambahan yang akan disembunyikan
+            var dataTableExtras = document.querySelectorAll('.dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate');
+            dataTableExtras.forEach(el => el.style.display = 'none'); // Sembunyikan elemen tambahan
+    
+            // Buat jendela baru untuk cetak
             var newWindow = window.open('', '', 'width=800,height=600');
             newWindow.document.write('<html><head><title>Cetak Laporan</title>');
             newWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">');
             newWindow.document.write('<style>table { width: 100%; border-collapse: collapse; } table, th, td { border: 1px solid black; padding: 8px; }</style>');
             newWindow.document.write('</head><body>');
-            newWindow.document.write(tableContent);
+            newWindow.document.write('<h4>Data Laporan Karyawan</h4>');
+            newWindow.document.write(tableElement.outerHTML); // Cetak hanya tabel
             newWindow.document.write('</body></html>');
             newWindow.document.close();
             newWindow.print();
+    
+            // Kembalikan elemen tambahan DataTables ke tampilan awal
+            dataTableExtras.forEach(el => el.style.display = '');
         });
-    </script>
+    </script>    
+    
     <script>
         $(document).ready(function () {
             // Inisialisasi DataTable
@@ -186,20 +198,6 @@
             maxDateInput.setAttribute('max', maxDate);
         });
 
-    </script>
-    <script>
-        document.getElementById('printTable').addEventListener('click', function () {
-            var tableContent = document.querySelector('.table-responsive').innerHTML; // Ambil isi tabel
-            var newWindow = window.open('', '', 'width=800,height=600'); // Buka jendela baru
-            newWindow.document.write('<html><head><title>Cetak Laporan</title>');
-            newWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">'); // Tambahkan style jika diperlukan
-            newWindow.document.write('<style>table { width: 100%; border-collapse: collapse; } table, th, td { border: 1px solid black; padding: 8px; }</style>');
-            newWindow.document.write('</head><body>');
-            newWindow.document.write(tableContent); // Tambahkan konten tabel
-            newWindow.document.write('</body></html>');
-            newWindow.document.close();
-            newWindow.print(); // Cetak halaman
-        });
     </script>
 
 </body>
