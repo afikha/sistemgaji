@@ -197,22 +197,40 @@
             // Ambil elemen input tanggal
             var minDateInput = document.getElementById('minDate');
             var maxDateInput = document.getElementById('maxDate');
-
+    
             // Dapatkan tanggal hari ini dalam format YYYY-MM-DD
             var today = new Date();
             var yyyy = today.getFullYear();
             var mm = String(today.getMonth() + 1).padStart(2, '0'); // Bulan ditambah 1 karena dimulai dari 0
             var dd = String(today.getDate()).padStart(2, '0');
-
-            var maxDate = ${yyyy}-${mm}-${dd};
-
-            // Tetapkan atribut max ke input tanggal
-            minDateInput.setAttribute('max', maxDate);
-            maxDateInput.setAttribute('max', maxDate);
+    
+            var currentDate = `${yyyy}-${mm}-${dd}`;
+    
+            // Tetapkan atribut max ke kedua input tanggal
+            minDateInput.setAttribute('max', currentDate);
+            maxDateInput.setAttribute('max', currentDate);
+    
+            // Event listener untuk memperbarui atribut min di tanggal akhir
+            minDateInput.addEventListener('change', function () {
+                var selectedMinDate = minDateInput.value;
+                if (selectedMinDate) {
+                    maxDateInput.setAttribute('min', selectedMinDate);
+                } else {
+                    maxDateInput.removeAttribute('min'); // Reset jika tidak ada tanggal
+                }
+            });
+    
+            // Event listener untuk memastikan tanggal akhir tidak lebih kecil dari tanggal awal
+            maxDateInput.addEventListener('change', function () {
+                var selectedMaxDate = maxDateInput.value;
+                var selectedMinDate = minDateInput.value;
+                if (selectedMaxDate && selectedMinDate && selectedMaxDate < selectedMinDate) {
+                    alert("Tanggal akhir tidak boleh lebih awal dari tanggal mulai!");
+                    maxDateInput.value = ''; // Reset tanggal akhir
+                }
+            });
         });
-
     </script>
-
 </body>
 
 </html>

@@ -183,3 +183,11 @@ body {
     color: white;
     padding: 12px;
 }
+table {
+    font-size: 15px; /* Ukuran font lebih kecil */
+  }
+
+  /* Jika hanya untuk tabel dengan id "example1" */
+  #example1 {
+    font-size: 15px;
+  }
