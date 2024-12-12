@@ -17,9 +17,11 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect()->route('indexKaryawan')->with('success', 'Login berhasil');
         } else {
-            return redirect()->route('indexLogin')->with('error', 'Username Password Salah');
+            // Tambahkan pesan error ke session flash
+            return redirect()->route('indexLogin')->with('error', 'Email atau password yang Anda masukkan salah');
         }
     }
+
 
     public function logout()
     {

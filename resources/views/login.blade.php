@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="{{asset('assets/style-login.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         body {
             background: url('{{ asset("assets/sarung.jpg") }}') no-repeat center center fixed; /* Pastikan path gambar benar */
@@ -39,6 +41,23 @@
                                     <h3 class="mb-4">Masuk</h3>
                                 </div>
                             </div>
+                        
+                            <!-- Alert untuk error -->
+                            @if(session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ session('error') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            @endif
+                        
+                            <!-- Alert untuk success -->
+                            @if(session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            @endif
+                        
                             <form action="{{route('postLogin')}}" class="signin-form" method="POST">
                                 @csrf
                                 <div class="form-group mt-3">
@@ -54,8 +73,8 @@
                                     <button type="submit" class="form-control btn btn-primary rounded submit px-3">Login</button>
                                 </div>
                             </form>
-
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -66,6 +85,7 @@
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

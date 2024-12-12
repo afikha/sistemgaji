@@ -8369,4 +8369,8 @@
           border: 1px solid transparent;
           background: #01d28e;
           color: #fff; }
+          .alert {
+            margin-top: 10px;
+            text-align: center;
+        }
   
