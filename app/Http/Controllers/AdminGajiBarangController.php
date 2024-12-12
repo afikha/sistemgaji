@@ -233,7 +233,7 @@ class AdminGajiBarangController extends Controller
                 ->with('failed', 'Maksimal 6 data dapat diinputkan dalam 1 minggu pada tahun ini!');
         }
 
-        // Cek apakah minggu pertama sudah diinputkan jika minggu lebih dari 1
+        // Cek apakah minggu sebelumnya sudah ada, tapi hanya berlaku untuk minggu > 1
         if ($minggu > 1) {
             $cekMingguSebelumnya = DB::table('gajibarang')
                 ->where('karyawan_id', $karyawan_id)
@@ -242,10 +242,11 @@ class AdminGajiBarangController extends Controller
                 ->exists();
 
             if (!$cekMingguSebelumnya) {
+                // Jangan blokir, hanya beri peringatan jika data minggu sebelumnya memang belum ada
+                // Atau Anda bisa menambahkan opsi untuk mengedit minggu ke-1 tanpa perlu validasi minggu sebelumnya
                 return redirect()->route('editGajiBarang', ['id' => $id])
-                    ->with('failed', "Anda harus menginputkan minggu sebelumnya terlebih dahulu sebelum menginputkan minggu ke-{$minggu}.");
+                    ->with('warning', "Minggu sebelumnya belum ada, apakah Anda yakin ingin mengedit minggu ke-{$minggu}?");
             }
-
             // Ambil tanggal terakhir dari minggu sebelumnya
             $tanggalTerakhirMingguSebelumnya = DB::table('gajibarang')
                 ->where('karyawan_id', $karyawan_id)
@@ -279,19 +280,18 @@ class AdminGajiBarangController extends Controller
                     ->with('failed', "Tanggal harus berada dalam rentang minggu ini ({$rentangMulai->format('Y-m-d')} hingga {$rentangAkhir->format('Y-m-d')})!");
             }
 
-            // Validasi apakah tanggal lebih lampau dari tanggal sebelumnya dalam minggu yang sama
-            $tanggalTerakhirMingguIni = DB::table('gajibarang')
+            // Cek jika tanggal sudah ada dalam database untuk karyawan yang sama (tidak termasuk data yang sedang diupdate)
+            $cektanggal = DB::table('gajibarang')
                 ->where('karyawan_id', $karyawan_id)
-                ->whereYear('tanggal', $tahun)
-                ->where('minggu', $minggu)
-                ->where('id', '!=', $id)
-                ->orderBy('tanggal', 'desc')
-                ->value('tanggal');
+                ->where('tanggal', $tanggal)
+                ->where('id', '!=', $id) // Tidak termasuk data yang sedang diedit
+                ->first();
 
-            if ($tanggalTerakhirMingguIni && Carbon::parse($tanggal) < Carbon::parse($tanggalTerakhirMingguIni)) {
+                if ($cektanggal) {
                 return redirect()->route('editGajiBarang', ['id' => $id])
-                    ->with('failed', "Tanggal pada minggu ke-{$minggu} tidak boleh lebih lampau dari tanggal sebelumnya ({$tanggalTerakhirMingguIni}).");
-            }
+                    ->with('failed', 'Tanggal yang Anda masukkan sudah ada!');
+                }
+
         }
 
         // Cek Tanggal <= hari ini
