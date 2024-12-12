@@ -258,11 +258,20 @@ class AdminGajiTenunController extends Controller
             ->where('minggu', 1)
             ->exists();
     
-        // Jika minggu ke-1 sudah ada di tahun yang sama, maka tahun berikutnya harus dimulai dari minggu ke-1
-        if ($minggu == 1 && $cekMinggu1) {
-            return redirect()->route('editGajiTenun', ['id' => $id])
-                ->with('failed', 'Minggu ke-1 sudah ada pada tahun ini, harap mulai lagi dari minggu ke-1 di tahun depan!');
-        }
+            if ($minggu == 1 && $cekMinggu1) {
+                $existingMinggu1 = DB::table('gajitenun')
+                    ->where('karyawan_id', $karyawan_id)
+                    ->whereYear('tanggal', $tahun)
+                    ->where('minggu', 1)
+                    ->where('id', '!=', $id)
+                    ->exists();
+            
+                if ($existingMinggu1) {
+                    return redirect()->route('editGajiTenun', ['id' => $id])
+                        ->with('failed', 'Minggu ke-1 sudah ada pada tahun ini untuk data lain, harap mulai lagi dari minggu ke-1 di tahun depan!');
+                }
+            }
+            
     
         // Jika minggu lebih dari 1, cek apakah minggu sebelumnya sudah ada di tahun yang sama
         if ($minggu > 1) {
