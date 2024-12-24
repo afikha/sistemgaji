@@ -55,7 +55,30 @@ class AdminGajiBarangController extends Controller
         if (Auth::check()) {
             $username = Auth::user()->name;
             $karyawan_id = request('karyawan_id');
-            return view('databarang.add',  ['karyawan_id' => $karyawan_id, 'username' => $username]);
+            
+            // Ambil minggu terakhir dan tanggal terakhir untuk karyawan_id yang sama
+            $lastData = DB::table('gajibarang')
+                ->where('karyawan_id', $karyawan_id)
+                ->orderBy('tanggal', 'desc')
+                ->first();
+
+            // Jika tidak ada data sebelumnya, set minggu pertama dan tanggal kosong
+            if (!$lastData) {
+                $minggu = 1;
+                $tanggal = null;
+            } else {
+                // Jika ada data sebelumnya, tentukan minggu dan tanggal
+                $minggu = $lastData->minggu < 52 ? $lastData->minggu + 1 : 52; // Maksimal minggu 52
+                // Tentukan tanggal otomatis 1 hari setelah tanggal terakhir input
+                $tanggal = Carbon::parse($lastData->tanggal)->addDay()->format('Y-m-d');
+            }
+            
+            return view('databarang.add', [
+                'karyawan_id' => $karyawan_id, 
+                'username' => $username,
+                'minggu' => $minggu,
+                'tanggal' => $tanggal
+            ]);
         } else {
             return redirect()->route('indexLogin')->with('error', 'Silakan Login');
         }

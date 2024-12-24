@@ -70,7 +70,29 @@ class AdminGajiTenunController extends Controller
         if (Auth::check()) {
             $username = Auth::user()->name;
             $karyawan_id = request('karyawan_id');
-            return view('datatenun.add', ['karyawan_id' => $karyawan_id, 'username' => $username]);
+
+            // Cek data terakhir berdasarkan karyawan_id
+            $lastData = DB::table('gajitenun')
+                ->where('karyawan_id', $karyawan_id)
+                ->orderBy('minggu', 'desc')
+                ->first();
+
+            if ($lastData) {
+                // Jika data sebelumnya ada, ambil minggu dan tanggal terakhir
+                $nextMinggu = $lastData->minggu + 1;
+                $nextTanggal = Carbon::parse($lastData->tanggal)->addDays(7)->format('Y-m-d');
+            } else {
+                // Jika tidak ada data sebelumnya, minggu dimulai dari 1, tanggal kosong
+                $nextMinggu = 1;
+                $nextTanggal = null;
+            }
+
+            return view('datatenun.add', [
+                'karyawan_id' => $karyawan_id,
+                'username' => $username,
+                'nextMinggu' => $nextMinggu,
+                'nextTanggal' => $nextTanggal,
+            ]);
         } else {
             return redirect()->route('indexLogin')->with('error', 'Silakan Login');
         }

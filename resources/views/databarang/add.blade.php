@@ -27,12 +27,12 @@
             @csrf
             <div class="form-group">
                 <label for="tanggal" class="form-label">Tanggal :</label>
-                <input type="date" name="tanggal" class="form-control" id="tanggal">
+                <input type="date" name="tanggal" class="form-control" id="tanggal" value="{{ old('tanggal', $tanggal) }}">
                 <input type="hidden" name="karyawan_id" value="{{$karyawan_id}}" class="form-control" id="karyawan_id" placeholder="Karyawan ID">
             </div>
             <div class="form-group">
                 <label for="minggu" class="form-label">Minggu ke- :</label>
-                <input type="number" name="minggu" class="form-control" id="minggu" required>
+                <input type="number" name="minggu" class="form-control" id="minggu"  value="{{ old('minggu',$minggu)}}"required>
             </div>
             <div class="form-group">
                 <label for="barangmasuk" class="form-label">Barang Masuk :</label>
