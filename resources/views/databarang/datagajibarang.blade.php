@@ -107,7 +107,7 @@
                       <td>{{$d->barang_jadi}}</td>
                       <td>{{$d->barang_proses}}</td>
                       <td>{{$d->sisabahan_proses}}</td>
-                      <td>{{$d->total_pengerjaan}}</td>
+                      <td>{{$d->total_pengerjaan}}  x {{$d->upahsaatini}}</td>
                       <td class="text-end">@currency($d->gaji)</td>
                       <td>
                         <center>

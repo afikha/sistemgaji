@@ -110,6 +110,7 @@ class AdminGajiTenunController extends Controller
         $hari_5 = $request->hari_5;
         $hari_6 = $request->hari_6;
         $total_pengerjaan = $request->total_pengerjaan;
+        $upahsaatini = $request->upahsaatini;
         $karyawan_id = $request->karyawan_id;
         $gaji = $request->gaji;
 
@@ -209,6 +210,7 @@ class AdminGajiTenunController extends Controller
 
         // Menghitung gaji dengan mengalikan total pengerjaan dengan upah
         $gaji = $total_pengerjaan * $upah;
+        $upahsaatini = $upah;
 
         // Insert data ke tabel gajitenun
         $add = DB::table('gajitenun')->insert([
@@ -221,6 +223,7 @@ class AdminGajiTenunController extends Controller
             'hari_5' => $hari_5,
             'hari_6' => $hari_6,
             'total_pengerjaan' => $total_pengerjaan,
+            'upahsaatini' => $upahsaatini,
             'gaji' => $gaji,
             'karyawan_id' => $karyawan_id
         ]);
@@ -261,6 +264,7 @@ class AdminGajiTenunController extends Controller
         $hari_5 = $request->hari_5;
         $hari_6 = $request->hari_6;
         $total_pengerjaan = $request->total_pengerjaan;
+        $upahsaatini = $request->upahsaatini;
         $karyawan_id = $request->karyawan_id;
         $gaji = $request->gaji;
     
@@ -371,6 +375,7 @@ class AdminGajiTenunController extends Controller
     
         // Menghitung gaji dengan mengalikan total pengerjaan dengan upah
         $gaji = $total_pengerjaan * $upah;
+        $upahsaatini = $upah;
     
         // Update data di tabel gajitenun
         $update = DB::table('gajitenun')->where('id', $id)->update([
@@ -383,6 +388,7 @@ class AdminGajiTenunController extends Controller
             'hari_5' => $hari_5,
             'hari_6' => $hari_6,
             'total_pengerjaan' => $total_pengerjaan,
+            'upahsaatini' => $upahsaatini,
             'gaji' => $gaji,
             'update_at' => now(),
         ]);

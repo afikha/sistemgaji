@@ -92,6 +92,7 @@ class AdminGajiBarangController extends Controller
         $barangkeluar = $request->barangkeluar;
         $sisabahan = $request->sisabahan;
         $totaldikerjakan = $request->totaldikerjakan;
+        $upahsaatini = $request->upahsaatini;
         $karyawan_id = $request->karyawan_id;
         $gaji = $request->gaji;
     
@@ -200,6 +201,7 @@ class AdminGajiBarangController extends Controller
 
         // Hitung gaji
         $gaji = $totaldikerjakan * $upah;
+        $upahsaatini = $upah;
     
         // Menambahkan data baru
         $add = DB::table('gajibarang')->insert([
@@ -209,6 +211,7 @@ class AdminGajiBarangController extends Controller
             'barang_proses' => $barangkeluar,
             'sisabahan_proses' => $sisabahan,
             'total_pengerjaan' => $totaldikerjakan,
+            'upahsaatini' => $upahsaatini,
             'gaji' => $gaji,
             'karyawan_id' => $karyawan_id
         ]);
@@ -245,6 +248,7 @@ class AdminGajiBarangController extends Controller
         $barangkeluar = $request->barangkeluar;
         $sisabahan = $request->sisabahan;
         $totaldikerjakan = $request->totaldikerjakan;
+        $upahsaatini = $request->upahsaatini;
         $gaji = $request->gaji;
         $karyawan_id = $request->karyawan_id;
     
@@ -370,6 +374,7 @@ class AdminGajiBarangController extends Controller
 
         // Hitung gaji
         $gaji = $totaldikerjakan * $upah;
+        $upahsaatini = $upah;
     
         // Update data
         $update = DB::table('gajibarang')->where('id', $id)->update([
@@ -379,6 +384,7 @@ class AdminGajiBarangController extends Controller
             'barang_proses' => $barangkeluar,
             'sisabahan_proses' => $sisabahan,
             'total_pengerjaan' => $totaldikerjakan,
+            'upahsaatini' => $upahsaatini,
             'gaji' => $gaji
         ]);
     
@@ -390,9 +396,6 @@ class AdminGajiBarangController extends Controller
                 ->with('failed', 'Gagal mengupdate data gaji barang.');
         }
     }
-    
-    
-    
 
     public function delete($id)
     {

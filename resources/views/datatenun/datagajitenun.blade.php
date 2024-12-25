@@ -105,14 +105,14 @@
                       @foreach ($data as $d)
                       <tr>
                         <td>{{$d->minggu}}</td>
-                        <td >{{$d->tanggal}}</td>
+                        <td>{{$d->tanggal}}</td>
                         <td>{{$d->hari_1}}</td>
                         <td>{{$d->hari_2}}</td>
                         <td>{{$d->hari_3}}</td>
                         <td>{{$d->hari_4}}</td>
                         <td>{{$d->hari_5}}</td>
                         <td>{{$d->hari_6}}</td>
-                        <td>{{$d->total_pengerjaan}} </td>
+                        <td>{{$d->total_pengerjaan}} x {{$d->upahsaatini}}</td>
                         <td class="text-end">@currency($d->gaji)</td>
                         @php
                         $total_thr = $total_thr + ($d->total_pengerjaan * $thr_tenun);
