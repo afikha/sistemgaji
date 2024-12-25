@@ -54,6 +54,9 @@
             .table-responsive {
                 overflow: visible !important;
             }
+            table td:nth-child(1), table th:nth-child(1) {
+                text-align: right; /* Mengatur kolom pertama (Gaji) agar rata kanan */
+            }
         }
     </style>
     
@@ -66,16 +69,9 @@
     <!-- container -->
     @include("container")
     <!-- /.container  -->
+    <a href="{{ url('/laporan/laporangaji') }}" class="btn btn-yellow mr-3">Kembali</a>
 
     <div class="container mt-4">
-        <!-- Menampilkan Pesan Error jika ada -->
-        @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-        @endif
-
-        <h5>DATA LAPORAN KARYAWAN</h5>
         <div class="row mb-3">
             <div class="col-md-3">
                 <label for="minDate" class="form-label">Tanggal Mulai:</label>
@@ -95,24 +91,27 @@
 
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <p>Nama Karyawan: <strong>{{ $nama_karyawan }}</strong></p>
+                <p>Jabatan: <strong>{{ $jabatan_karyawan }}</strong></p>
                 <thead>
                     <tr>
-                        <th>Nama</th>
-                        <th>Jabatan</th>
                         <th>Gaji</th>
                         <th>Tanggal Penggajian</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($dataLaporan as $laporan)
+                    @foreach ($data as $d)
                     <tr>
-                        <td class="text-start">{{ $laporan['nama_karyawan'] }}</td>
-                        <td class="text-start">{{ $laporan['jabatan_karyawan'] }}</td>
-                        <td class="text-end">@currency($laporan['gaji'])</td>
-                        <td>{{ $laporan['tanggal_penggajian'] }}</td>
+                        <td class="text-end">@currency($d->gaji)</td>
+                        <td>{{ $d->tanggal }}</td>
                     </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="text-end"><strong>Total Gaji : </strong><strong>@currency($data->sum('gaji'))</strong></td>
+                    </tr>
+                </tfoot>                
             </table>
         </div>
     </div>
@@ -125,18 +124,29 @@
     <script src="{{ asset('admin-lte') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('admin-lte') }}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script>
+        $(document).ready(function () {
+            var table = $('#dataTable').DataTable({
+                order: [] // Tidak ada pengurutan default
+            });
+        });
+    </script>    
+    <script>
         document.getElementById('printTable').addEventListener('click', function () {
             // Ambil elemen tabel tanpa DataTable tambahan
             var tableElement = document.querySelector('#dataTable');
-    
+
             // Ambil nilai tanggal dari input
             var minDate = document.getElementById('minDate').value || 'Semua Tanggal';
             var maxDate = document.getElementById('maxDate').value || 'Semua Tanggal';
-    
+
             // Simpan elemen DataTables tambahan yang akan disembunyikan
             var dataTableExtras = document.querySelectorAll('.dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate');
             dataTableExtras.forEach(el => el.style.display = 'none'); // Sembunyikan elemen tambahan
-    
+
+            // Ambil nama dan jabatan karyawan
+            var namaKaryawan = "{{ $nama_karyawan ?? 'Nama Karyawan Tidak Diketahui' }}";
+            var jabatanKaryawan = "{{ $jabatan_karyawan ?? 'Jabatan Tidak Diketahui' }}";
+
             // Buat jendela baru untuk cetak
             var newWindow = window.open('', '', 'width=800,height=600');
             newWindow.document.write('<html><head><title>Cetak Laporan</title>');
@@ -147,22 +157,24 @@
             newWindow.document.write('table td:nth-child(3) { text-align: right; }'); // Rata kanan untuk kolom gaji
             newWindow.document.write('</style>');
             newWindow.document.write('</head><body>');
-    
+
             // Tambahkan header laporan dan rentang tanggal
             newWindow.document.write('<h4>Data Laporan Karyawan</h4>');
+            newWindow.document.write('<p>Nama Karyawan: <strong>' + namaKaryawan + '</strong></p>');
+            newWindow.document.write('<p>Jabatan: <strong>' + jabatanKaryawan + '</strong></p>');
             newWindow.document.write('<p>Rentang Tanggal: <strong>' + minDate + '</strong> hingga <strong>' + maxDate + '</strong></p>');
-    
+
             // Cetak tabel
             newWindow.document.write(tableElement.outerHTML);
             newWindow.document.write('</body></html>');
             newWindow.document.close();
             newWindow.print();
-    
+
             // Kembalikan elemen tambahan DataTables ke tampilan awal
             dataTableExtras.forEach(el => el.style.display = '');
         });
     </script>
-    
+
     <script>
         $(document).ready(function () {
             // Inisialisasi DataTable
@@ -192,6 +204,7 @@
             });
         });
     </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Ambil elemen input tanggal
