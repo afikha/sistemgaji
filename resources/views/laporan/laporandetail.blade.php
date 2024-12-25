@@ -66,9 +66,9 @@
     <!-- Navbar -->
     @include("header")
     <!-- /.navbar -->
-    <!-- container -->
+    {{-- <!-- container -->
     @include("container")
-    <!-- /.container  -->
+    <!-- /.container  --> --}}
     <a href="{{ url('/laporan/laporangaji') }}" class="btn btn-yellow mr-3">Kembali</a>
 
     <div class="container mt-4">

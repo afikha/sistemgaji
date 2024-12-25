@@ -88,7 +88,7 @@
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>Minggu ke-</th>
+                        <th>Minggu</th>
                         <th>Tanggal</th>
                         <th>Hari 1</th>
                         <th>Hari 2</th>

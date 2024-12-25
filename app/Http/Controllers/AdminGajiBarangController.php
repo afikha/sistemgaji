@@ -40,11 +40,11 @@ class AdminGajiBarangController extends Controller
                     ->get();
             }
 
-            $gaji = 0;
+            $totalGaji = 0;
             foreach ($data as $d) {
-                $gaji = $gaji + ($d->total_pengerjaan * $jabatangaji);
+                $totalGaji = $data->sum('gaji');  // Sum the gaji values
             }
-            return view('databarang.datagajibarang', ['data' => $data, 'gaji' => $gaji, 'karyawan_id' => $karyawan_id, 'username' => $username]);
+            return view('databarang.datagajibarang', ['data' => $data, 'totalGaji' => $totalGaji, 'karyawan_id' => $karyawan_id, 'username' => $username]);
         } else {
             return redirect()->route('indexLogin')->with('error', 'Silakan Login');
         }
@@ -93,6 +93,7 @@ class AdminGajiBarangController extends Controller
         $sisabahan = $request->sisabahan;
         $totaldikerjakan = $request->totaldikerjakan;
         $karyawan_id = $request->karyawan_id;
+        $gaji = $request->gaji;
     
         // Validasi jika tanggal atau minggu kosong
         if (is_null($tanggal) || is_null($minggu)) {
@@ -185,6 +186,20 @@ class AdminGajiBarangController extends Controller
             return redirect()->route('addViewGajiBarang', ['karyawan_id' => $karyawan_id])
                 ->with('failed', 'Tanggal yang Anda masukkan sudah ada!');
         }
+
+        // Ambil upah sesuai dengan jobdesk/jabatan
+        $upah = DB::table('upah')
+            ->join('karyawan', 'upah.jabatan', '=', 'karyawan.jabatan_karyawan')
+            ->where('karyawan.id', $karyawan_id)
+            ->value('upah');
+
+        if ($upah === null) {
+            return redirect()->route('addViewGajiBarang', ['karyawan_id' => $karyawan_id])
+                ->with('failed', 'Data upah untuk jabatan tidak ditemukan.');
+        }
+
+        // Hitung gaji
+        $gaji = $totaldikerjakan * $upah;
     
         // Menambahkan data baru
         $add = DB::table('gajibarang')->insert([
@@ -194,6 +209,7 @@ class AdminGajiBarangController extends Controller
             'barang_proses' => $barangkeluar,
             'sisabahan_proses' => $sisabahan,
             'total_pengerjaan' => $totaldikerjakan,
+            'gaji' => $gaji,
             'karyawan_id' => $karyawan_id
         ]);
     
@@ -229,6 +245,7 @@ class AdminGajiBarangController extends Controller
         $barangkeluar = $request->barangkeluar;
         $sisabahan = $request->sisabahan;
         $totaldikerjakan = $request->totaldikerjakan;
+        $gaji = $request->gaji;
         $karyawan_id = $request->karyawan_id;
     
         // Validasi jika tanggal atau minggu kosong
@@ -340,6 +357,19 @@ class AdminGajiBarangController extends Controller
             return redirect()->route('editGajiBarang', ['id' => $id])
                 ->with('failed', 'Tanggal yang Anda masukkan sudah ada!');
         }
+        // Ambil upah sesuai dengan jobdesk/jabatan
+        $upah = DB::table('upah')
+            ->join('karyawan', 'upah.jabatan', '=', 'karyawan.jabatan_karyawan')
+            ->where('karyawan.id', $karyawan_id)
+            ->value('upah');
+
+        if ($upah === null) {
+            return redirect()->route('editGajiBarang', ['id' => $id])
+                ->with('failed', 'Data upah untuk jabatan tidak ditemukan.');
+        }
+
+        // Hitung gaji
+        $gaji = $totaldikerjakan * $upah;
     
         // Update data
         $update = DB::table('gajibarang')->where('id', $id)->update([
@@ -348,7 +378,8 @@ class AdminGajiBarangController extends Controller
             'barang_jadi' => $barangmasuk,
             'barang_proses' => $barangkeluar,
             'sisabahan_proses' => $sisabahan,
-            'total_pengerjaan' => $totaldikerjakan
+            'total_pengerjaan' => $totaldikerjakan,
+            'gaji' => $gaji
         ]);
     
         if ($update) {

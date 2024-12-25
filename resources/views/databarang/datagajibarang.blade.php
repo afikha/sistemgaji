@@ -93,8 +93,9 @@
                       <th>Minggu</th>
                       <th>Barang Masuk</th>
                       <th>Barang Keluar</th>
-                      <th>Sisa Proses Sebelumnya</th>
+                      <th>Sisa Sebelumnya</th>
                       <th>Total Pengerjaan</th>
+                      <th>Gaji Sementara</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -107,6 +108,7 @@
                       <td>{{$d->barang_proses}}</td>
                       <td>{{$d->sisabahan_proses}}</td>
                       <td>{{$d->total_pengerjaan}}</td>
+                      <td class="text-end">@currency($d->gaji)</td>
                       <td>
                         <center>
                           <a class="btn btn-sm btn-info" href="{{route('editGajiBarang', $d->id)}}">
@@ -122,9 +124,9 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="3"></td>
+                      <td colspan="5"></td>
                       <td><strong>Total Gaji</strong></td>
-                      <td colspan="1" class="text-end">@currency($gaji)</td>
+                      <td colspan="1" class="text-end">@currency($totalGaji)</td>
                     </tr>
                   </tfoot>
                 </table>
