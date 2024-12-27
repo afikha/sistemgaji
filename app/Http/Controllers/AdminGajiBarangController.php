@@ -21,22 +21,26 @@ class AdminGajiBarangController extends Controller
             if ($minggu == null && $tahun == null) {
                 $data = DB::table('gajibarang')
                     ->where('karyawan_id', $karyawan_id)
+                    ->orderBy('tanggal', 'desc')
                     ->get();
             } else if ($minggu != null && $tahun == null) {
                 $data = DB::table('gajibarang')
                     ->where('karyawan_id', $karyawan_id)
                     ->where('minggu', $minggu)
+                    ->orderBy('tanggal', 'desc')
                     ->get();
             } else if ($tahun != null && $minggu == null) {
                 $data = DB::table('gajibarang')
                     ->where('karyawan_id', $karyawan_id)
                     ->whereYear('tanggal', $tahun)
+                    ->orderBy('tanggal', 'desc')
                     ->get();
             } else {
                 $data = DB::table('gajibarang')
                     ->where('karyawan_id', $karyawan_id)
                     ->whereYear('tanggal', $tahun)
                     ->where('minggu', $minggu)
+                    ->orderBy('tanggal', 'desc')
                     ->get();
             }
 

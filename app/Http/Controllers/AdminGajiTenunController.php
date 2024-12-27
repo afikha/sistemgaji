@@ -24,7 +24,9 @@ class AdminGajiTenunController extends Controller
                  // Jika tahun awal tidak diberikan, ambil semua data karyawan
                 $data = DB::table('gajitenun')
                     ->where('karyawan_id', $karyawan_id)
-                    ->get();
+                    ->get()
+                    ->sortByDesc('tanggal');
+                // dd($data->toArray());
             } else {
                  // Cek data awal dari tahun sebelumnya
                 $cekdataawal = DB::table('gajitenun')
@@ -52,7 +54,9 @@ class AdminGajiTenunController extends Controller
                     $data = DB::table('gajitenun')
                         ->where('karyawan_id', $karyawan_id)
                         ->whereBetween('tanggal', [$cekdataawal->tanggal, $tanggalakhir->format('Y-m-d')])
-                        ->get();
+                        ->get()
+                        // ->sortByDesc('minggu')
+                        ->sortByDesc('tanggal');
                 } else {
                     // Jika tidak ada data awal, variabel $data akan diisi array kosong.
                     $data = [];
@@ -74,9 +78,7 @@ class AdminGajiTenunController extends Controller
             // Cek data terakhir berdasarkan karyawan_id
             $lastData = DB::table('gajitenun')
                 ->where('karyawan_id', $karyawan_id)
-                ->orderBy('minggu', 'desc')
                 ->first();
-
             if ($lastData) {
                 // Jika data sebelumnya ada, ambil minggu dan tanggal terakhir
                 $nextMinggu = $lastData->minggu + 1;
@@ -181,7 +183,7 @@ class AdminGajiTenunController extends Controller
         }
 
         // Cek tanggal tidak boleh lebih dari hari ini
-        if ($tanggal > Carbon::now()->format('Y-m-d')) {
+        if ($tanggal > now()->format('Y-m-d')) {
             return redirect()->route('addViewGajiTenun', ['karyawan_id' => $karyawan_id])
                 ->with('failed', 'Tanggal tidak boleh lebih dari hari ini!');
         }

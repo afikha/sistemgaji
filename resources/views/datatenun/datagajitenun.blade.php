@@ -88,8 +88,8 @@
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>Minggu</th>
                         <th>Tanggal</th>
+                        <th>Minggu</th>
                         <th>Hari 1</th>
                         <th>Hari 2</th>
                         <th>Hari 3</th>
@@ -104,8 +104,8 @@
                     <tbody>
                       @foreach ($data as $d)
                       <tr>
-                        <td>{{$d->minggu}}</td>
                         <td>{{$d->tanggal}}</td>
+                        <td>{{$d->minggu}}</td>   
                         <td>{{$d->hari_1}}</td>
                         <td>{{$d->hari_2}}</td>
                         <td>{{$d->hari_3}}</td>
@@ -125,6 +125,7 @@
                         </td>
                       </tr>
                       @endforeach
+                    <tbody>
                   </table>
                 </div>
                 <!-- Modal -->
@@ -179,7 +180,7 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('admin-lte') }}/dist/js/adminlte.min.js"></script>
     <!-- Page specific script -->
-    <script>
+    {{-- <script>
       $(function() {
         $("#example1").DataTable({
           "responsive": true,
@@ -188,7 +189,28 @@
           "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
       });
-    </script>
+    </script> --}}
+    <script>
+      $(document).ready(function () {
+        $('#example1').DataTable({
+          dom: 'Bfrtip',  // Menentukan posisi tombol di atas tabel
+          buttons: [
+            'copy',        // Tombol untuk menyalin data ke clipboard
+            'csv',         // Tombol untuk mengekspor ke CSV
+            'excel',       // Tombol untuk mengekspor ke Excel
+            'pdf',         // Tombol untuk mengekspor ke PDF
+            'print',       // Tombol untuk mencetak
+            'colvis'       // Tombol untuk memilih kolom yang akan ditampilkan
+          ],
+          responsive: true,  // Memastikan DataTable dapat disesuaikan dengan ukuran layar
+          lengthMenu: [10, 25, 50, 75, 100],  // Menentukan jumlah data per halaman
+         "order": [],  // Menonaktifkan sorting default sehingga tanda panah tidak aktif pada awal
+      "columnDefs": [
+        { "orderable": true, "targets": 0 }  // Kolom 0 (Tanggal) tetap dapat disortir
+      ]
+        });
+      });
+    </script>  
 </body>
 
 </html>
